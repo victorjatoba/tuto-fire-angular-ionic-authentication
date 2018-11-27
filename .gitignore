@@ -26,4 +26,4 @@ npm-debug.log
 package-lock.json
 
 # Confidential files.
-src/security/
+security/

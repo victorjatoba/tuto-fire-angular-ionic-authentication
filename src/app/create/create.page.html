@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Create user</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <form #userForm="ngForm">
+    <ion-item>
+      <ion-label position="floating">First name</ion-label>
+      <ion-input name="first" type="text" [(ngModel)]="newUser.first" required></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Last name</ion-label>
+      <ion-input name="last" type="text" [(ngModel)]="newUser.last"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Born year</ion-label>
+      <ion-input name="born" type="number" [(ngModel)]="newUser.born"></ion-input>
+    </ion-item>
+    <ion-button shape="round" color="primary" expand="block" [disabled]="!userForm.valid" (click)="save()">Save</ion-button>
+  </form>
+</ion-content>
