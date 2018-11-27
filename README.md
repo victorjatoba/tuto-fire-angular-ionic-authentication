@@ -10,6 +10,7 @@
 ## Technical details:
 * Angular 7+
 * Ionic 4+
+* Firebase
 
 ## Installation
 
