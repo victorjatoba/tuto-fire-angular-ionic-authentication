@@ -2,7 +2,7 @@
  * Firebase json file contains the credentials to access database.
  * to be able to see this file, call @victorjatoba
  */
-var firebaseConfigJson = require('./../../../security/firebase-config.json');
+const firebaseConfigJson = require('./../../../security/firebase-config.json');
 
 // The file contents for the current environment will overwrite these during build.
 // The build system defaults to the dev environment which uses `environment.ts`, but if you do
@@ -13,12 +13,12 @@ export const environment = {
 
   /**
    * Firebase configuration file.
-   * 
+   *
    * Data base name: jatoba-getting-started
    * count email: victorjatoba10[at]gmail.com
    *
    * Used to conect with Firebase database.
-   * 
+   *
    * @see security/firebase-config.json
    */
   firebaseConfig: firebaseConfigJson

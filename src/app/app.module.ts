@@ -14,6 +14,7 @@ import { AngularFireDatabaseModule, AngularFireDatabase } from '@angular/fire/da
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { environment } from '../environments/environment';
 import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
     declarations: [AppComponent],
@@ -25,6 +26,7 @@ import { FormsModule } from '@angular/forms';
         AngularFireDatabaseModule,
         AngularFireAuthModule,
         FormsModule,
+        HttpClientModule,
         AppRoutingModule
     ],
     providers: [
