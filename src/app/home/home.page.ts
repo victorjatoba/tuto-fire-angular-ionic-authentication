@@ -14,7 +14,7 @@ export class HomePage {
 
     constructor(db: AngularFirestore) {
         this.collection = db.collection<User>('users');
-        this.users = this.collection.valueChanges()
+        this.users = this.collection.valueChanges();
     }
 
 }

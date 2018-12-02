@@ -13,7 +13,8 @@ export class CreatePage {
     newUser: User = {
         first: '',
         last: '',
-        born: null
+        born: null,
+        email: ''
     };
 
     constructor(private router: Router, db: AngularFirestore) {

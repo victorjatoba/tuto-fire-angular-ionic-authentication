@@ -29,17 +29,20 @@ export class AuthService {
             const provider = new firebase.auth.FacebookAuthProvider();
             this.afAuth.auth
                 .signInWithPopup(provider)
-                .then(res => {
-                    console.log(res);
+                .then((userInfo: any) => {
+                    // console.log(userInfo);
+                    const userProfile = userInfo.additionalUserInfo.profile;
 
-                    localStorage.setItem('currentUser', JSON.stringify(res));
-                    this.currentUserSubject.next(
-                        {
-                            first: 'test',
-                            last: 'test',
-                            born: 1900
-                        });
-                    resolve(res);
+                    const newUser: User = {
+                        first: userProfile.first_name,
+                        last: userProfile.last_name,
+                        email: userProfile.email,
+                        born: 0
+                    };
+
+                    this.currentUserSubject.next(newUser);
+                    localStorage.setItem('currentUser', JSON.stringify(newUser));
+                    resolve(newUser);
                 }, err => {
                     console.log(err);
                     reject(err);
