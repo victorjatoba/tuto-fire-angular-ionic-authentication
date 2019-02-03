@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { User } from '../dao/user.dao';
 import { HttpClient } from '@angular/common/http';
+import { User } from '../model/user.model';
 
 @Injectable({
     providedIn: 'root'
@@ -33,11 +33,15 @@ export class AuthService {
                     // console.log(userInfo);
                     const userProfile = userInfo.additionalUserInfo.profile;
 
+                    console.log(userProfile);
+
                     const newUser: User = {
-                        first: userProfile.first_name,
-                        last: userProfile.last_name,
+                        firstName: userProfile.first_name,
+                        lastName: userProfile.last_name,
                         email: userProfile.email,
-                        born: 0
+                        id: userProfile.id,
+                        password: '',
+                        username: ''
                     };
 
                     this.currentUserSubject.next(newUser);

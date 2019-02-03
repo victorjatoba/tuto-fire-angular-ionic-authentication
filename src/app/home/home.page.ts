@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AngularFirestore, AngularFirestoreCollection } from "@angular/fire/firestore";
-import { User } from '../dao/user.dao';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
+import { User } from '../model/user.model';
 
 @Component({
     selector: 'app-home',
@@ -9,7 +9,7 @@ import { User } from '../dao/user.dao';
     styleUrls: ['home.page.scss'],
 })
 export class HomePage {
-    users: Observable<any[]>;
+    users: Observable<User[]>;
     collection: AngularFirestoreCollection<User>;
 
     constructor(db: AngularFirestore) {
@@ -17,4 +17,13 @@ export class HomePage {
         this.users = this.collection.valueChanges();
     }
 
+    /**
+     * TODO
+     */
+    edit() {}
+
+    /**
+     * TODO
+     */
+    delete() {}
 }

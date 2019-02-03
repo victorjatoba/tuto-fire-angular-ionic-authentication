@@ -1,8 +1,11 @@
 /**
  * Firebase json file contains the credentials to access database.
- * to be able to see this file, call @victorjatoba
+ * To know how to get your firebase database credentials, follow
+ * the website bellow instructions.
+ *
+ * @see https://www.appypie.com/faqs/how-can-i-get-api-key-auth-domain-database-url-and-storage-bucket-from-my-firebase-account
  */
-const firebaseConfigJson = require('./../../../security/firebase-config.json');
+const firebaseConfigJson = require('./../security/firebase-config.json');
 
 // The file contents for the current environment will overwrite these during build.
 // The build system defaults to the dev environment which uses `environment.ts`, but if you do
@@ -15,7 +18,6 @@ export const environment = {
    * Firebase configuration file.
    *
    * Data base name: jatoba-getting-started
-   * count email: victorjatoba10[at]gmail.com
    *
    * Used to conect with Firebase database.
    *

@@ -1,4 +1,4 @@
-import { NgModule, ErrorHandler } from '@angular/core';
+import { NgModule, ErrorHandler, Optional, SkipSelf } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
@@ -15,7 +15,7 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { environment } from '../environments/environment';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFirestoreModule, FirestoreSettingsToken } from '@angular/fire/firestore';
 
 @NgModule({
     declarations: [AppComponent],
@@ -35,8 +35,21 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
         StatusBar,
         SplashScreen,
         { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+        /**
+         * To remove Firestore (5.8.0): timestampsInSnapshots error console.
+         * @see https://github.com/angular/angularfire2/issues/1993
+         */
+        { provide: FirestoreSettingsToken, useValue: {} },
         AngularFireDatabase,
     ],
+
     bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+    // constructor(private afs: AngularFirestore) {
+    //     afs.firestore.settings({
+    //       timestampsInSnapshots: true,
+    //     });
+    //     afs.firestore.enablePersistence();
+    //   }
+}

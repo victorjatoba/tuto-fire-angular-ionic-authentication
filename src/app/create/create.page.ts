@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { AngularFirestoreCollection, AngularFirestore } from '@angular/fire/firestore';
-import { User } from '../dao/user.dao';
+import { User } from '../model/user.model';
 
 @Component({
     selector: 'app-create',
@@ -11,10 +11,12 @@ import { User } from '../dao/user.dao';
 export class CreatePage {
     collection: AngularFirestoreCollection<User>;
     newUser: User = {
-        first: '',
-        last: '',
-        born: null,
-        email: ''
+        username: '',
+        email: '',
+        firstName: '',
+        id: undefined,
+        lastName: '',
+        password: ''
     };
 
     constructor(private router: Router, db: AngularFirestore) {
