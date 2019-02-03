@@ -45,11 +45,4 @@ import { AngularFirestoreModule, FirestoreSettingsToken } from '@angular/fire/fi
 
     bootstrap: [AppComponent]
 })
-export class AppModule {
-    // constructor(private afs: AngularFirestore) {
-    //     afs.firestore.settings({
-    //       timestampsInSnapshots: true,
-    //     });
-    //     afs.firestore.enablePersistence();
-    //   }
-}
+export class AppModule { }
