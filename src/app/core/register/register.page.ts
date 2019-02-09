@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../services/auth-service.service';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { PersistenceService } from '../services/persistence.service';
 import { LoadingController } from '@ionic/angular';
+import { AuthService } from '../services/authentication.service';
+import { PersistenceService } from '../services/persistence.service';
 
 /**
  * @name register.page
@@ -25,9 +25,9 @@ export class RegisterPage {
     /**
      * Authentication by facebook account.
      */
-    tryFacebookLogin() {
+    onFacebookLogin() {
 
-        this.authService.doFacebookLogin()
+        this.authService.facebookLogin()
             .then(userFacebook => {
                 console.log(userFacebook);
 
@@ -43,6 +43,9 @@ export class RegisterPage {
             }, err => {
                 console.log(err);
             });
+    }
+
+    onGoogleLogin() {
     }
 
     async showLoading() {

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AngularFirestoreCollection, AngularFirestore } from '@angular/fire/firestore';
-import { User } from '../model/user.model';
+import { User } from './../../shared/model/user.model';
 
 @Component({
     selector: 'app-create',

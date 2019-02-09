@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
-import { User } from '../model/user.model';
+import { User } from './../../shared/model/user.model';
 
 @Component({
     selector: 'app-home',

@@ -2,9 +2,18 @@ import { Injectable } from '@angular/core';
 import * as firebase from 'firebase/app';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { User } from '../model/user.model';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { User } from './../../shared/model/user.model';
 
+/**
+ * @name authentication-service.service
+ *
+ * @description
+ * Business rules and methods to take authentication
+ * with a lot of kind of accounts.
+ *
+ * FACEBOOK, GOOGLE, Email, etc.
+ */
 @Injectable({
     providedIn: 'root'
 })
@@ -24,7 +33,7 @@ export class AuthService {
         return this.currentUserSubject.value;
     }
 
-    doFacebookLogin() {
+    facebookLogin() {
         return new Promise<any>((resolve, reject) => {
             const provider = new firebase.auth.FacebookAuthProvider();
             this.afAuth.auth

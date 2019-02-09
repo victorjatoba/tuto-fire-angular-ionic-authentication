@@ -1,3 +1,6 @@
+/**
+ * The persisted User object.
+ */
 export interface User {
     id: number;
     username: string;

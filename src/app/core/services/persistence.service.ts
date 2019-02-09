@@ -1,8 +1,14 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestoreCollection, AngularFirestore, DocumentReference } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
-import { User } from '../model/user.model';
+import { User } from './../../shared/model/user.model';
 
+/**
+ * @name persistence.service
+ *
+ * @description
+ * Responsible to apply DB persistence methods.
+ */
 @Injectable({
     providedIn: 'root'
 })
