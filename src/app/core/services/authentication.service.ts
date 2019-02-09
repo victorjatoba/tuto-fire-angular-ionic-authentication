@@ -4,6 +4,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { User } from './../../shared/model/user.model';
+import { UserFactory } from './../../shared/model/user.factory';
 
 /**
  * @name authentication-service.service
@@ -22,7 +23,7 @@ export class AuthService {
     private currentUserSubject: BehaviorSubject<User>;
     public currentUser: Observable<User>;
 
-    constructor(public afAuth: AngularFireAuth,
+    constructor(public angularFireAuth: AngularFireAuth,
         private http: HttpClient) {
 
         this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
@@ -36,25 +37,16 @@ export class AuthService {
     facebookLogin() {
         return new Promise<any>((resolve, reject) => {
             const provider = new firebase.auth.FacebookAuthProvider();
-            this.afAuth.auth
+            this.angularFireAuth.auth
                 .signInWithPopup(provider)
                 .then((userInfo: any) => {
-                    // console.log(userInfo);
                     const userProfile = userInfo.additionalUserInfo.profile;
 
                     console.log(userProfile);
 
-                    const newUser: User = {
-                        firstName: userProfile.first_name,
-                        lastName: userProfile.last_name,
-                        email: userProfile.email,
-                        id: userProfile.id,
-                        password: '',
-                        username: ''
-                    };
+                    const newUser = UserFactory.createUser(userProfile);
 
-                    this.currentUserSubject.next(newUser);
-                    localStorage.setItem('currentUser', JSON.stringify(newUser));
+                    this.registerUserOnLocalStorage(newUser);
                     resolve(newUser);
                 }, err => {
                     console.log(err);
@@ -63,4 +55,9 @@ export class AuthService {
         });
     }
 
+
+    private registerUserOnLocalStorage(newUser: User) {
+        this.currentUserSubject.next(newUser);
+        localStorage.setItem('currentUser', JSON.stringify(newUser));
+    }
 }
