@@ -26,7 +26,6 @@ ionic start tuto-fire-angular-ionic-start blank --type=angular
 Firebase:
 ```
 npm install --save firebase
-npm install --save angularfire2
 ```
 
 ## Meta
