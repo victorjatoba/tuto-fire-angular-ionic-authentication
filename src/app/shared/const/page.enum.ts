@@ -7,5 +7,6 @@
  * @author victor.jatoba
  */
 export enum Page {
-    AUTHENTICATION = 'register'
+    AUTHENTICATION = '/register',
+    HOME = '/home'
 }

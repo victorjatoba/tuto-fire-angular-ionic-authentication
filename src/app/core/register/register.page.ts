@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
 import { AuthService } from '../services/authentication.service';
 import { PersistenceService } from '../services/persistence.service';
+import { Page } from '../../shared/const/page.enum';
 
 /**
  * @name register.page
@@ -34,7 +35,7 @@ export class RegisterPage {
                 this.showLoadingWithOptions();
                 this.persistence.save(userFacebook)
                     .then(val => {
-                        this.router.navigate(['/home']);
+                        this.router.navigate([Page.HOME]);
                         this.hideLoading();
 
                     }, err => {
