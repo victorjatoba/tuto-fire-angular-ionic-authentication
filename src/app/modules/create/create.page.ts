@@ -11,10 +11,13 @@ import { User } from './../../shared/model/user.model';
 export class CreatePage {
     collection: AngularFirestoreCollection<User>;
     newUser: User = {
+        authService: '',
         username: '',
         email: '',
         firstName: '',
         id: undefined,
+        gender: '',
+        picture: '',
         lastName: '',
         password: ''
     };

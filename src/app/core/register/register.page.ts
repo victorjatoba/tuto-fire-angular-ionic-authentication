@@ -30,10 +30,19 @@ export class RegisterPage {
     onFacebookLogin() {
         this.authService.facebookLogin()
             .then(userFacebook => {
-                this.persistUserIfNecessary(userFacebook);
+                this.persistUserOnDB(userFacebook);
             }, err => {
-                console.log(err);
+                this.authError(err);
             });
+    }
+
+    private authError(err: any) {
+        if (err.code === 'auth/account-exists-with-different-credential') {
+            console.log(err);
+            this.router.navigate([Page.HOME]);
+        } else {
+            console.log(err);
+        }
     }
 
     /**
@@ -42,28 +51,10 @@ export class RegisterPage {
     onGoogleLogin() {
         this.authService.googleLogin()
             .then(user => {
-                this.persistUserIfNecessary(user);
+                this.persistUserOnDB(user);
             }, err => {
-                console.log(err);
+                this.authError(err);
             });
-    }
-
-    private persistUserIfNecessary(user) {
-        if (!this.isUserExistOnDB(user)) {
-            this.persistUserOnDB(user);
-        } else {
-            this.router.navigate([Page.HOME]);
-        }
-    }
-
-    /**
-     * Verify if user exists on DB.
-     *
-     * @param user The user to be verified.
-     */
-    isUserExistOnDB(user: User) {
-        return false;
-        // TODO
     }
 
     /**

@@ -1,10 +1,12 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>
-      Info List
+      Users' List
     </ion-title>
     <ion-buttons slot="end">
-      <ion-button routerLink="/create"><ion-icon name="add-circle"></ion-icon></ion-button>
+      <ion-button routerLink="/create">
+        <ion-icon name="add-circle"></ion-icon>
+      </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -13,8 +15,12 @@
   <ion-list>
     <ion-item-sliding *ngFor="let user of users | async">
       <ion-item detail lines="full" routerLink="/detail/{{user.lastName}}">
-        <ion-icon name="desktop" slot="start"></ion-icon>
+        <ion-thumbnail slot="start">
+          <ion-img [src]="user.picture"></ion-img>
+        </ion-thumbnail>
         {{user.firstName}}
+        {{user.email}}
+        {{user.authService}}
       </ion-item>
       <ion-item-options side="end">
         <ion-item-option color="primary" (click)="edit()">EDIT</ion-item-option>

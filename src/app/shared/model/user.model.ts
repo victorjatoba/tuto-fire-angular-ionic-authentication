@@ -3,6 +3,7 @@
  */
 export interface User {
     id: number;
+    authService: string;
     username: string;
     password: string;
     firstName: string;
