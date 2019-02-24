@@ -67,6 +67,14 @@ See the link bellow with more details how to obtained this credentials.
 }
 ```
 
+### Enable sign in providers
+
+1. Go to Firebase console;
+2. Open your database;
+3. Go to Authentication;
+4. Click on "sign in method" tab;
+5. Enable Google, Facebook and Twitter accounts.
+
 ### run the app
 
 run: ```$ ionic serve```

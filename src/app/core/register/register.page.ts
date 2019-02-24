@@ -4,6 +4,7 @@ import { LoadingController } from '@ionic/angular';
 import { AuthService } from '../services/authentication.service';
 import { PersistenceService } from '../services/persistence.service';
 import { Page } from '../../shared/const/page.enum';
+import { User } from '../../shared/model/user.model';
 
 /**
  * @name register.page
@@ -24,29 +25,62 @@ export class RegisterPage {
         private loading: LoadingController) { }
 
     /**
-     * Authentication by facebook account.
+     * Go Facebook Authentication.
      */
     onFacebookLogin() {
-
         this.authService.facebookLogin()
             .then(userFacebook => {
-                console.log(userFacebook);
-
-                this.showLoadingWithOptions();
-                this.persistence.save(userFacebook)
-                    .then(val => {
-                        this.router.navigate([Page.HOME]);
-                        this.hideLoading();
-
-                    }, err => {
-                        this.hideLoading();
-                    });
+                this.persistUserIfNecessary(userFacebook);
             }, err => {
                 console.log(err);
             });
     }
 
+    /**
+     * Go Google Authentication.
+     */
     onGoogleLogin() {
+        this.authService.googleLogin()
+            .then(user => {
+                this.persistUserIfNecessary(user);
+            }, err => {
+                console.log(err);
+            });
+    }
+
+    private persistUserIfNecessary(user) {
+        if (!this.isUserExistOnDB(user)) {
+            this.persistUserOnDB(user);
+        } else {
+            this.router.navigate([Page.HOME]);
+        }
+    }
+
+    /**
+     * Verify if user exists on DB.
+     *
+     * @param user The user to be verified.
+     */
+    isUserExistOnDB(user: User) {
+        return false;
+        // TODO
+    }
+
+    /**
+     * Persist the user on Firebase DB.
+     *
+     * @param user
+     */
+    private persistUserOnDB(user: User) {
+        console.log(user);
+        this.showLoadingWithOptions();
+        this.persistence.save(user)
+            .then(val => {
+                this.router.navigate([Page.HOME]);
+                this.hideLoading();
+            }, err => {
+                this.hideLoading();
+            });
     }
 
     async showLoading() {
