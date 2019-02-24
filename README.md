@@ -50,6 +50,7 @@ git clone https://github.com/victorjatoba/tuto-fire-angular-ionic-authentication
 
 See the link bellow with more details how to obtained this credentials.
 @see https://www.appypie.com/faqs/how-can-i-get-api-key-auth-domain-database-url-and-storage-bucket-from-my-firebase-account
+
 5. Create directory *security* on the *src* project. ```src/security```
 6. create file firebase-config.json
 7. Paste config values from step 2 onto firebase-config.json file.
