@@ -17,7 +17,7 @@ export class CreatePage {
         firstName: '',
         id: undefined,
         gender: '',
-        picture: '',
+        pictureUrl: '',
         lastName: '',
         password: ''
     };
