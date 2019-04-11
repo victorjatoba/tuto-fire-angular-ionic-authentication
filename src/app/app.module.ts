@@ -1,4 +1,4 @@
-import { NgModule, ErrorHandler, Optional, SkipSelf } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
@@ -16,10 +16,13 @@ import { environment } from '../environments/environment';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AngularFirestoreModule, FirestoreSettingsToken } from '@angular/fire/firestore';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
-    declarations: [AppComponent],
-    entryComponents: [],
+    declarations: [
+        AppComponent
+    ],
+
     imports: [
         BrowserModule,
         IonicModule.forRoot(),
@@ -28,9 +31,11 @@ import { AngularFirestoreModule, FirestoreSettingsToken } from '@angular/fire/fi
         AngularFirestoreModule,
         AngularFireAuthModule,
         FormsModule,
+        SharedModule,
         HttpClientModule,
         AppRoutingModule
     ],
+
     providers: [
         StatusBar,
         SplashScreen,

@@ -6,30 +6,31 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { LoginPage } from './login.page';
+import { SharedModule } from '../../../shared/shared.module';
 import { UserDoesNotExistPopover } from './components/popover/user-does-not-exist.popover';
-import { SharedModule } from '../../shared/shared.module';
 
 const routes: Routes = [
-  {
-    path: '',
-    component: LoginPage
-  }
+    {
+        path: '',
+        component: LoginPage
+    }
 ];
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    SharedModule,
-    RouterModule.forChild(routes)
-  ],
+    imports: [
+        CommonModule,
+        FormsModule,
+        IonicModule,
+        RouterModule.forChild(routes)
+    ],
 
-  declarations: [
-    LoginPage,
-  ],
+    declarations: [
+        LoginPage,
+        UserDoesNotExistPopover
+    ],
 
-  entryComponents: [
-  ]
+    entryComponents: [
+        UserDoesNotExistPopover
+    ]
 })
 export class LoginPageModule { }

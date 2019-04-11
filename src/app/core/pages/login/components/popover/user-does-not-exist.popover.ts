@@ -1,4 +1,4 @@
-import { PopoverLocalController } from './../../../../shared/notification/popover-local.controller';
+import { PopoverLocalController } from './../../../../../shared/notification/popover-local.controller';
 import { Component } from '@angular/core';
 
 /**

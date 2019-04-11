@@ -20,12 +20,12 @@ const routes: Routes = [
     },
     {
         path: 'login',
-        loadChildren: './core/login/login.module#LoginPageModule',
+        loadChildren: './core/pages/login/login.module#LoginPageModule',
         canActivate: [AuthGuard]
     },
     {
         path: 'register',
-        loadChildren: './core/register/register.module#RegisterPageModule',
+        loadChildren: './core/pages/register/register.module#RegisterPageModule',
         canActivate: [AuthGuard]
     }
 ];

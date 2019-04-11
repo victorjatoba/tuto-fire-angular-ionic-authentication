@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
-import { AuthService } from '../services/authentication.service';
-import { PersistenceService } from '../services/persistence.service';
-import { Page } from '../../shared/const/page.enum';
-import { User } from '../../shared/model/user.model';
+import { AuthService } from '../../services/authentication.service';
+import { PersistenceService } from '../../services/persistence.service';
+import { Page } from '../../../shared/const/page.enum';
+import { User } from '../../../shared/model/user.model';
 
 /**
  * @name register.page

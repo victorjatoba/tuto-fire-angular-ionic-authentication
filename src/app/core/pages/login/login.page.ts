@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
-import { FieldValidationUtil } from './../../shared/util/field-validation.util';
-import { AuthService } from '../services/authentication.service';
-import { RouterUtil } from '../../shared/util/router.util';
-import { PopoverLocalController } from '../../shared/notification/popover-local.controller';
-import { NotificationReturnType } from '../../shared/notification/notification-return-type.enum';
+import { FieldValidationUtil } from './../../../shared/util/field-validation.util';
+import { AuthService } from '../../services/authentication.service';
+import { RouterUtil } from '../../../shared/util/router.util';
+import { PopoverLocalController } from '../../../shared/notification/popover-local.controller';
+import { NotificationReturnType } from '../../../shared/notification/notification-return-type.enum';
 import { UserDoesNotExistPopover } from './components/popover/user-does-not-exist.popover';
-import { NotificationReturn } from '../../shared/notification/notification-return';
-import { PageUrl } from '../../shared/util/page-url.enum';
+import { NotificationReturn } from '../../../shared/notification/notification-return';
+import { PageUrl } from '../../../shared/util/page-url.enum';
 
 @Component({
     selector: 'app-login',
@@ -63,6 +63,7 @@ export class LoginPage implements OnInit {
                 RouterUtil.goToPage(PageUrl.USER_HOME, this.router);
             }, err => {
                 // tslint:disable-next-line:max-line-length
+                console.log(err);
                 this.showErrorPopover();
 
             });
@@ -80,6 +81,7 @@ export class LoginPage implements OnInit {
                     RouterUtil.goToPage(PageUrl.REGISTER, this.router);
                 }
             }, error => {
+                console.log(error);
                 this.popoverController.dismiss();
             });
     }
@@ -89,6 +91,7 @@ export class LoginPage implements OnInit {
             .then(userFacebook => {
                 RouterUtil.goToPage('home', this.router);
             }, err => {
+                console.log(err);
                 this.showErrorPopover();
             });
     }
