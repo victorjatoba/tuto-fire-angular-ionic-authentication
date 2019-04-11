@@ -6,6 +6,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { LoginPage } from './login.page';
+import { UserDoesNotExistPopover } from './components/popover/user-does-not-exist.popover';
+import { SharedModule } from '../../shared/shared.module';
 
 const routes: Routes = [
   {
@@ -19,8 +21,15 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
+    SharedModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [LoginPage]
+
+  declarations: [
+    LoginPage,
+  ],
+
+  entryComponents: [
+  ]
 })
-export class LoginPageModule {}
+export class LoginPageModule { }

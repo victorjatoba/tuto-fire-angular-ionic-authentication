@@ -17,7 +17,7 @@ import { NotificationReturn } from './notification-return';
 @Injectable({
     providedIn: 'root'
 })
-export class PopoverSharedController extends PopoverController {
+export class PopoverLocalController extends PopoverController {
     /**
      * Controls the data sent to the class that opens this popover.
      */

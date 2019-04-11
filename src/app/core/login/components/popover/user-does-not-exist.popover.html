@@ -1,0 +1,35 @@
+<ion-row padding>
+  <ion-col size="12" text-center>
+    <ion-img src='assets/img/check-popover.svg' class="check-popover"></ion-img>
+  </ion-col>
+
+  <!-- SUCESS MESSAGE-->
+  <ion-col size="12" text-center>
+    <h2>User not found!</h2>
+  </ion-col>
+
+  <!--FILTER QUESTION-->
+  <ion-col size="12" text-center>
+    <p>Try to register first!</p>
+  </ion-col>
+
+  <!--BUTTON TO APPLY CHANGES-->
+  <ion-col size="12">
+    <ion-button id="bt_register" expand="block" class="bt-md-advanced"
+      (click)="onClickRegister()">
+      Register
+    </ion-button>
+
+  </ion-col>
+
+</ion-row>
+
+<!-- BUTTON TO CLOSE THE POPOVER-->
+
+<ion-row>
+  <ion-col class="footer" no-padding>
+    <ion-button expand="block" id="bt_fechar_popover_rede_criada" class="fechar-button" (click)="onClose()">
+      Close
+    </ion-button>
+  </ion-col>
+</ion-row>

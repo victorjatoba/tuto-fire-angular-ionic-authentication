@@ -1,7 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
 import { FieldValidationUtil } from './../../shared/util/field-validation.util';
+import { AuthService } from '../services/authentication.service';
+import { RouterUtil } from '../../shared/util/router.util';
+import { PopoverLocalController } from '../../shared/notification/popover-local.controller';
+import { NotificationReturnType } from '../../shared/notification/notification-return-type.enum';
+import { UserDoesNotExistPopover } from './components/popover/user-does-not-exist.popover';
+import { NotificationReturn } from '../../shared/notification/notification-return';
+import { PageUrl } from '../../shared/util/page-url.enum';
 
 @Component({
     selector: 'app-login',
@@ -34,9 +41,10 @@ export class LoginPage implements OnInit {
      * @param loginService Service that contains API calls to login
      */
     constructor(
+        private authService: AuthService,
         public router: Router,
         public loadingCtrl: LoadingController,
-        private route: ActivatedRoute) { }
+        private popoverController: PopoverLocalController) { }
 
 
     ngOnInit() {
@@ -50,9 +58,39 @@ export class LoginPage implements OnInit {
     }
 
     onGoogleLogin() {
+        this.authService.googleLogin()
+            .then(user => {
+                RouterUtil.goToPage(PageUrl.USER_HOME, this.router);
+            }, err => {
+                // tslint:disable-next-line:max-line-length
+                this.showErrorPopover();
+
+            });
+    }
+
+    /**
+     * Show an error popover to redirect user to correctly page.
+     */
+    private showErrorPopover() {
+        const popoverSubscription = this.popoverController.showPopover(UserDoesNotExistPopover, 'popover-content', null, null, false)
+            .subscribe((data: NotificationReturn) => {
+                popoverSubscription.unsubscribe();
+                this.popoverController.dismiss();
+                if (data.type === NotificationReturnType.SUCCESS) {
+                    RouterUtil.goToPage(PageUrl.REGISTER, this.router);
+                }
+            }, error => {
+                this.popoverController.dismiss();
+            });
     }
 
     onFacebookLogin() {
+        this.authService.facebookLogin()
+            .then(userFacebook => {
+                RouterUtil.goToPage('home', this.router);
+            }, err => {
+                this.showErrorPopover();
+            });
     }
 
     onSupport() {

@@ -19,7 +19,8 @@ import { User } from '../../shared/model/user.model';
 })
 export class RegisterPage {
 
-    constructor(private authService: AuthService,
+    constructor(
+        private authService: AuthService,
         private router: Router,
         private persistence: PersistenceService,
         private loading: LoadingController) { }
