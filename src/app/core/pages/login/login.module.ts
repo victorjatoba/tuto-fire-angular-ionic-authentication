@@ -6,8 +6,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { LoginPage } from './login.page';
-import { SharedModule } from '../../../shared/shared.module';
-import { UserDoesNotExistPopover } from './components/popover/user-does-not-exist.popover';
+import { UserDoesNotExistPopover } from './components/popover/user-does-not-exist/user-does-not-exist.popover';
+import { UserAlreadyExistPopover } from './components/popover/user-already-exist/user-already-exist.popover';
 
 const routes: Routes = [
     {
@@ -26,11 +26,13 @@ const routes: Routes = [
 
     declarations: [
         LoginPage,
-        UserDoesNotExistPopover
+        UserDoesNotExistPopover,
+        UserAlreadyExistPopover
     ],
 
     entryComponents: [
-        UserDoesNotExistPopover
+        UserDoesNotExistPopover,
+        UserAlreadyExistPopover
     ]
 })
 export class LoginPageModule { }

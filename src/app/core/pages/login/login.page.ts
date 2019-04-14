@@ -6,9 +6,10 @@ import { AuthService } from '../../services/authentication.service';
 import { RouterUtil } from '../../../shared/util/router.util';
 import { PopoverLocalController } from '../../../shared/notification/popover-local.controller';
 import { NotificationReturnType } from '../../../shared/notification/notification-return-type.enum';
-import { UserDoesNotExistPopover } from './components/popover/user-does-not-exist.popover';
+import { UserDoesNotExistPopover } from './components/popover/user-does-not-exist/user-does-not-exist.popover';
 import { NotificationReturn } from '../../../shared/notification/notification-return';
 import { PageUrl } from '../../../shared/util/page-url.enum';
+import { UserAlreadyExistPopover } from './components/popover/user-already-exist/user-already-exist.popover';
 
 @Component({
     selector: 'app-login',
@@ -43,7 +44,6 @@ export class LoginPage implements OnInit {
     constructor(
         private authService: AuthService,
         public router: Router,
-        public loadingCtrl: LoadingController,
         private popoverController: PopoverLocalController) { }
 
 
@@ -86,13 +86,37 @@ export class LoginPage implements OnInit {
             });
     }
 
+    /**
+     * Show an error popover to redirect user to correctly page.
+     */
+    private showAccountAlreradExistPopover(message, email) {
+        const data = {
+            message: message,
+            email: email
+        };
+
+        const popoverSubscription = this.popoverController.showPopover(UserAlreadyExistPopover, 'popover-content', data, null, true)
+            .subscribe((notificationReturn: NotificationReturn) => {
+                popoverSubscription.unsubscribe();
+                this.popoverController.dismiss();
+            }, error => {
+                console.log(error);
+                this.popoverController.dismiss();
+            });
+    }
+
     onFacebookLogin() {
         this.authService.facebookLogin()
             .then(userFacebook => {
                 RouterUtil.goToPage('home', this.router);
-            }, err => {
-                console.log(err);
-                this.showErrorPopover();
+            }, error => {
+                console.log(error);
+                if (error.code === 'auth/account-exists-with-different-credential') {
+                    this.showAccountAlreradExistPopover(error.message, error.email);
+                } else {
+                    this.showErrorPopover();
+
+                }
             });
     }
 
