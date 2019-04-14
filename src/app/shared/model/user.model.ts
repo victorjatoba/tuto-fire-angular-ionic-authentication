@@ -3,6 +3,7 @@
  */
 export interface User {
     id: number;
+    email: string;
     authService: string;
     username: string;
     password: string;
@@ -10,6 +11,5 @@ export interface User {
     lastName: string;
     gender?: string;
     token?: string;
-    email: string;
-    pictureUrl: string;
+    pictureUrl?: string;
 }

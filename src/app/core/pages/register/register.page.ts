@@ -1,10 +1,13 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { LoadingController } from '@ionic/angular';
 import { AuthService } from '../../services/authentication.service';
 import { PersistenceService } from '../../services/persistence.service';
 import { Page } from '../../../shared/const/page.enum';
 import { User } from '../../../shared/model/user.model';
+import { CredentialPagesTemplate } from '../credential-pages.template';
+import { PopoverLocalController } from 'src/app/shared/components/notification/popover-local.controller';
+import { LoadingLocalController } from 'src/app/shared/components/loading/loading-local.controller';
+import { FirebaseCode } from '../const/firebase-code.const';
 
 /**
  * @name register.page
@@ -17,45 +20,59 @@ import { User } from '../../../shared/model/user.model';
     templateUrl: './register.page.html',
     styleUrls: ['./register.page.scss'],
 })
-export class RegisterPage {
+export class RegisterPage extends CredentialPagesTemplate {
+
+    user: User = {
+        id: undefined,
+        authService: '',
+        username: '',
+        password: '',
+        firstName: '',
+        lastName: '',
+        email: '',
+    };
 
     constructor(
         private authService: AuthService,
-        private router: Router,
         private persistence: PersistenceService,
-        private loading: LoadingController) { }
+        private loading: LoadingLocalController,
+        public router: Router,
+        public popoverController: PopoverLocalController) {
+        super(router, popoverController);
+    }
 
     /**
      * Go Facebook Authentication.
      */
-    onFacebookLogin() {
+    onFacebook() {
         this.authService.facebookLogin()
             .then(userFacebook => {
                 this.persistUserOnDB(userFacebook);
-            }, err => {
-                this.authError(err);
+            }, error => {
+                console.log(error);
+                this.showAppropriateAuthError(error);
             });
-    }
-
-    private authError(err: any) {
-        if (err.code === 'auth/account-exists-with-different-credential') {
-            console.log(err);
-            this.router.navigate([Page.HOME]);
-        } else {
-            console.log(err);
-        }
     }
 
     /**
      * Go Google Authentication.
      */
-    onGoogleLogin() {
+    onGoogle() {
         this.authService.googleLogin()
             .then(user => {
                 this.persistUserOnDB(user);
-            }, err => {
-                this.authError(err);
+            }, error => {
+                console.log(error);
+                this.showAppropriateAuthError(error);
             });
+    }
+
+    private showAppropriateAuthError(error: any) {
+        if (error.code === FirebaseCode.ACCOUNT_EXISTS_WITH_DIFFERENT_CREDENTIAL) {
+            this.showAccountAlreadyExistPopover(error.message, error.email);
+        } else {
+            this.showErrorPopover();
+        }
     }
 
     /**
@@ -65,36 +82,19 @@ export class RegisterPage {
      */
     private persistUserOnDB(user: User) {
         console.log(user);
-        this.showLoadingWithOptions();
+        this.loading.showLoadingWithPersonalizedMessage('Registering...');
         this.persistence.save(user)
             .then(val => {
                 this.router.navigate([Page.HOME]);
-                this.hideLoading();
+                this.loading.dismiss();
             }, err => {
-                this.hideLoading();
+                this.loading.dismiss();
+                this.showErrorPopover();
             });
     }
 
-    async showLoading() {
-        const loading = await this.loading.create({
-            message: 'Please wait...',
-            duration: 2000
-        });
-        return await loading.present();
+    onRegisterByEmail() {
+
     }
 
-    async showLoadingWithOptions() {
-        const loading = await this.loading.create({
-            spinner: null,
-            duration: 5000,
-            message: 'Registering...',
-            translucent: true,
-            cssClass: 'custom-class custom-loading'
-        });
-        return await loading.present();
-    }
-
-    hideLoading() {
-        this.loading.dismiss();
-    }
 }

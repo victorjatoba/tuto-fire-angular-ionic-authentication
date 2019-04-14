@@ -24,6 +24,9 @@ export class UserFactory {
             case UserType.TWITTER:
                 return UserFactory.createTwitterUser(userProfile);
 
+            case UserType.EMAIL_PASSWORD:
+                return UserFactory.createEmailPasswordUser(userProfile);
+
             default:
                 throw new Error('Type of user does not exist');
         }
@@ -72,6 +75,26 @@ export class UserFactory {
     private static createTwitterUser(userProfile: any): User {
         return {
             authService: UserType.TWITTER,
+            firstName: userProfile.given_name,
+            lastName: userProfile.family_name,
+            email: userProfile.email,
+            id: userProfile.id,
+            gender: userProfile.gender,
+            pictureUrl: userProfile.picture,
+            password: '',
+            username: ''
+        };
+    }
+
+    /**
+     * TODO
+     * @param userProfile the user data.
+     */
+    private static createEmailPasswordUser(userProfile: any): User {
+        console.log(userProfile);
+
+        return {
+            authService: UserType.EMAIL_PASSWORD,
             firstName: userProfile.given_name,
             lastName: userProfile.family_name,
             email: userProfile.email,

@@ -6,6 +6,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { User } from './../../shared/model/user.model';
 import { UserFactory } from './../../shared/model/user.factory';
 import { UserType } from './../../shared/const/user-type.enum';
+import { Credentials } from '../models/credentials.model';
 /**
  * @name authentication-service.service
  *
@@ -36,15 +37,17 @@ export class AuthService {
      * Init the local attributes.
      */
     private initValues() {
-        this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
+        this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('user')));
 
-        this.angularFireAuth.authState.subscribe((auth) => {
-            this.authState = auth;
-        });
-    }
-
-    public get currentUserValue(): User {
-        return this.currentUserSubject.value;
+        this.angularFireAuth.authState
+            .subscribe(user => {
+                if (user) {
+                    const newUser = UserFactory.createUser(user, UserType.EMAIL_PASSWORD);
+                    this.registerUserOnLocalStorage(newUser);
+                } else {
+                    localStorage.setItem('user', null);
+                }
+            });
     }
 
     /**
@@ -119,35 +122,87 @@ export class AuthService {
     }
 
     /**
+     * Register user by email and password
+     *
+     * @param email the email chose by user.
+     * @param password the password chose by user.
+     */
+    registerByEmail(email: string, password: string) {
+        return new Promise<any>((resolve, reject) => {
+            this.angularFireAuth
+                .auth
+                .createUserWithEmailAndPassword(email, password)
+                .then((result) => {
+                    console.log(result);
+
+                    this.sendEmailVerification()
+                        .then(res => {
+                            resolve(res);
+                        }).catch(error => {
+                            reject(error);
+                        });
+                }).catch(error => {
+                    reject(error);
+                });
+        });
+    }
+
+    /**
+     * Send email to user to verify the email.
+     */
+    private sendEmailVerification() {
+        return new Promise<any>((resolve, reject) => {
+            this.angularFireAuth.auth.currentUser
+                .sendEmailVerification()
+                .then((res) => {
+                    console.log(res);
+                    resolve(res);
+                }).catch(error => {
+                    reject(error);
+                });
+
+        });
+    }
+
+    loginByEmail(email: string, password: string) {
+        return new Promise<any>((resolve, reject) => {
+            this.angularFireAuth
+                .auth
+                .signInWithEmailAndPassword(email, password)
+                .then((result) => {
+                    console.log(result);
+
+                    // this.authState = result.user;
+                    // const userProfileMoreInfo = credential.additionalUserInfo.profile;
+                    // console.log(userProfileMoreInfo);
+                    resolve(result);
+                }).catch(error => {
+                    reject(error);
+                });
+        });
+    }
+
+    async sendPasswordResetEmail(passwordResetEmail: string) {
+        return await this.angularFireAuth.auth.sendPasswordResetEmail(passwordResetEmail);
+    }
+
+    /**
      * Register user on localStorage.
      *
      * @param newUser The user to be register.
      */
     private registerUserOnLocalStorage(newUser: User) {
         this.currentUserSubject.next(newUser);
-        localStorage.setItem('currentUser', JSON.stringify(newUser));
+        localStorage.setItem('user', JSON.stringify(newUser));
     }
 
     /**
-     * Returns true if user is logged in
+     * Remove the user to sinalize that doesn't exist
+     * user logged.
      */
-    get authenticated(): boolean {
-        return this.authState !== null;
-    }
-
-    // Returns current user data
-    get currentUser(): any {
-        return this.authenticated ? this.authState : null;
-    }
-
-    // Returns
-    get currentUserObservable(): any {
-        return this.angularFireAuth.authState;
-    }
-
-    // Returns current user UID
-    get currentUserId(): string {
-        return this.authenticated ? this.authState.uid : '';
+    private removeUserOnLocalStorage() {
+        this.currentUserSubject.next(null);
+        localStorage.removeItem('user');
     }
 
     /**
@@ -157,12 +212,21 @@ export class AuthService {
         return new Promise<any>((resolve, reject) => {
             this.angularFireAuth.auth.signOut()
                 .then(val => {
+                    this.removeUserOnLocalStorage();
                     resolve(val);
                 })
                 .catch(error => {
                     reject(error);
                 });
         });
+    }
+
+    /**
+     * Verify if the user is logged in.
+     */
+    get isLoggedIn(): boolean {
+        const user = JSON.parse(localStorage.getItem('user'));
+        return user !== null;
     }
 
 }
