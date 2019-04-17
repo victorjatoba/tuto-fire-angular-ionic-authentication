@@ -5,9 +5,10 @@ import { PersistenceService } from '../../services/persistence.service';
 import { Page } from '../../../shared/const/page.enum';
 import { User } from '../../../shared/model/user.model';
 import { CredentialPagesTemplate } from '../credential-pages.template';
-import { PopoverLocalController } from 'src/app/shared/components/notification/popover-local.controller';
-import { LoadingLocalController } from 'src/app/shared/components/loading/loading-local.controller';
-import { FirebaseCode } from '../const/firebase-code.const';
+import { LoadingLocalController } from '../../../shared/components/loading/loading-local.controller';
+import { FirebaseErrorCode } from '../../const/firebase-error-code.const';
+import { PopoverLocalController } from '../../../shared/components/notification/popover-local.controller';
+import { LoginRegisterTab } from '../../const/login-register-tab.const';
 
 /**
  * @name register.page
@@ -16,11 +17,25 @@ import { FirebaseCode } from '../const/firebase-code.const';
  * Page that contains the register options.
  */
 @Component({
-    selector: 'app-register',
-    templateUrl: './register.page.html',
-    styleUrls: ['./register.page.scss'],
+    selector: 'app-login-register',
+    templateUrl: './login-register.page.html',
+    styleUrls: ['./login-register.page.scss'],
 })
-export class RegisterPage extends CredentialPagesTemplate {
+export class LoginRegisterPage extends CredentialPagesTemplate {
+
+    /**
+     * The tab choise by user.
+     */
+    tabSelected = LoginRegisterTab.LOGIN.value;
+
+    /**
+     * The available list of tabs. Need to be instantiable by page module.
+     * @required
+     */
+    tabs = [
+        LoginRegisterTab.LOGIN,
+        LoginRegisterTab.REGISTER
+    ];
 
     user: User = {
         id: undefined,
@@ -68,7 +83,7 @@ export class RegisterPage extends CredentialPagesTemplate {
     }
 
     private showAppropriateAuthError(error: any) {
-        if (error.code === FirebaseCode.ACCOUNT_EXISTS_WITH_DIFFERENT_CREDENTIAL) {
+        if (error.code === FirebaseErrorCode.ACCOUNT_EXISTS_WITH_DIFFERENT_CREDENTIAL) {
             this.showAccountAlreadyExistPopover(error.message, error.email);
         } else {
             this.showErrorPopover();

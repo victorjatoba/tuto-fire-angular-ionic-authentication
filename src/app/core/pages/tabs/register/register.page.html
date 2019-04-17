@@ -22,7 +22,7 @@
                 <!-- USERNAME FIELD -->
                 <ion-row>
                   <ion-col>
-                    <ion-input ngModel [(ngModel)]="userName" type="text" id="login_input_username" name="userName"
+                    <ion-input ngModel [(ngModel)]="user.username" type="text" id="login_input_username" name="userName"
                       placeholder="username" (input)="getLoginInputText($event)" required>
                     </ion-input>
                   </ion-col>
@@ -32,7 +32,7 @@
                 <ion-row>
                   <ion-col>
                     <div>
-                      <ion-input [(ngModel)]="password" [type]="passwordType" id="login_input_password"
+                      <ion-input [(ngModel)]="user.password" [type]="passwordType" id="login_input_password"
                         clearOnEdit="false" name="password" placeholder="password" required>
                       </ion-input>
                       <ion-img *ngIf="!passwordShown" class="eye-style" id="passwordEye" (click)="passwordToggle()"
@@ -48,7 +48,7 @@
                 <!-- ENTER BUTTON -->
                 <ion-row>
                   <ion-col>
-                    <ion-button id="login_button_submit" [disabled]="!f.valid" type="submit" expand="block" class="bt-md-advanced test" (click)="login()" shape="round">Login</ion-button>
+                    <ion-button id="login_button_submit" [disabled]="!f.valid" type="submit" expand="block" class="bt-md-advanced test" (click)="onRegisterByEmail()" shape="round">Register</ion-button>
                   </ion-col>
                 </ion-row>
 
@@ -68,7 +68,7 @@
                 <!-- SESSION TO SELECT THE SOCIAL NETWORK-->
                 <ion-row justify-content-around>
                   <ion-col>
-                    <ion-card class="social-network-circle google-circle" (click)="onGoogleLogin()">
+                    <ion-card class="social-network-circle google-circle" (click)="onGoogle()">
                       <ion-card-content>
                         <ion-row>
                           <ion-col align-self-center>
@@ -79,7 +79,7 @@
                     </ion-card>
                   </ion-col>
                   <ion-col offset="1">
-                    <ion-card class="social-network-circle facebook-circle" (click)="onFacebookLogin()">
+                    <ion-card class="social-network-circle facebook-circle" (click)="onFacebook()">
                       <ion-card-content>
                         <ion-row>
                           <ion-col align-self-center>
@@ -110,7 +110,7 @@
             <ion-item class="text footer-text-left" (click)="onSupport()" lines="none">Support</ion-item>
           </ion-col>
           <ion-col align-self-end>
-            <ion-item class="text footer-text-right" (click)="onCreateAccount()" lines="none">Criar conta</ion-item>
+            <ion-item class="text footer-text-right" lines="none">Fazer login</ion-item>
           </ion-col>
         </ion-row>
       </ion-col>

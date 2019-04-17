@@ -5,28 +5,7 @@ import { AuthGuard } from './core/guards/auth-guard.service';
 const routes: Routes = [
     {
         path: '',
-        redirectTo: 'login',
-        pathMatch: 'full'
-    },
-    {
-        path: 'home',
-        loadChildren: './modules/home/home.module#HomePageModule'
-
-    },
-    {
-        path: 'create',
-        loadChildren: './modules/create/create.module#CreatePageModule'
-
-    },
-    {
-        path: 'login',
-        loadChildren: './core/pages/login/login.module#LoginPageModule',
-        canActivate: [AuthGuard]
-    },
-    {
-        path: 'register',
-        loadChildren: './core/pages/register/register.module#RegisterPageModule',
-        canActivate: [AuthGuard]
+        loadChildren: './core/core.module#CoreModule'
     }
 ];
 

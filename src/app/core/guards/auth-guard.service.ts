@@ -11,9 +11,7 @@ import { Page } from '../../shared/const/page.enum';
  *
  * @author victor.jatoba
  */
-@Injectable({
-    providedIn: 'root'
-})
+@Injectable()
 export class AuthGuard implements CanActivate {
     constructor(
         private router: Router,
@@ -27,8 +25,7 @@ export class AuthGuard implements CanActivate {
      * @param state
      */
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-        const currentUser = this.authenticationService.currentUserValue;
-        if (currentUser) {
+        if (this.authenticationService.isLoggedIn) {
             // logged in so return true
             return true;
         }
