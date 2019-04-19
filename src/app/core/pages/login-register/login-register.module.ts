@@ -7,6 +7,8 @@ import { IonicModule } from '@ionic/angular';
 import { LoginRegisterPage } from './login-register.page';
 import { LoginPageModule } from '../tabs/login/login.module';
 import { RegisterPageModule } from '../tabs/register/register.module';
+import { UserDoesNotExistPopover } from './components/popover/user-does-not-exist/user-does-not-exist.popover';
+import { UserAlreadyExistPopover } from './components/popover/user-already-exist/user-already-exist.popover';
 
 
 const routes: Routes = [
@@ -26,7 +28,13 @@ const routes: Routes = [
         RouterModule.forChild(routes)
     ],
     declarations: [
-        LoginRegisterPage
+        LoginRegisterPage,
+        UserDoesNotExistPopover,
+        UserAlreadyExistPopover
+    ],
+    entryComponents: [
+        UserDoesNotExistPopover,
+        UserAlreadyExistPopover
     ]
 })
 export class LoginRegisterPageModule { }

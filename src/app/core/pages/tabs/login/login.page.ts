@@ -1,17 +1,12 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { User } from '../../../../shared/model/user.model';
+import { Component, Output, EventEmitter } from '@angular/core';
+import { CredentialPagesTemplate } from '../credential-pages.template';
 
 @Component({
     selector: 'app-login',
     templateUrl: './login.page.html',
     styleUrls: ['./login.page.scss'],
 })
-export class LoginPage {
-
-    /**
-     * The data manipulated by screen.
-     */
-    @Input() user: User;
+export class LoginPage extends CredentialPagesTemplate {
 
     /**
      * Return to the caller the new selected select value.
@@ -24,7 +19,7 @@ export class LoginPage {
      */
     onSubmit() {
         event.stopPropagation();
-        this.submit.emit(JSON.stringify(this.user));
+        this.submit.emit(JSON.stringify(this.userCredentials));
     }
 
 }

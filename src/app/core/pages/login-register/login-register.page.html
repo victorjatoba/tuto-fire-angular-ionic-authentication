@@ -8,10 +8,11 @@
     <ion-row justify-content-center>
         <ion-col size="12" size-lg="8">
             <div padding>
+                <!-- TABS TITLE -->
                 <ion-segment [(ngModel)]="tabSelected" mode="md">
                     <ion-segment-button id="segment_{tab.value}" *ngFor="let tab of tabs" [value]="tab.value">
                         <ion-label>
-                            {{tab.translateKey}}
+                            {{tab.title}}
                         </ion-label>
                     </ion-segment-button>
 
@@ -21,13 +22,13 @@
 
             <div [ngSwitch]="tabSelected">
                 <!-- LOGIN -->
-                <div id="useTime_tab_byDay" *ngSwitchCase="'day'">
-                    <app-login (submit)="onLogin($event)"></app-login>
+                <div id="tab_login" *ngSwitchCase="'login'">
+                    <app-login [userCredentials]="userCredentials" (submit)="onLoginByEmail($event)"></app-login>
                 </div>
 
-                <!-- BY PERIOD -->
-                <div id="useTime_tab_byPeriod" no-padding *ngSwitchCase="'period'">
-                    <app-register (submit)="onRegister($event)"></app-register>
+                <!-- REGISTER -->
+                <div id="tab_register" no-padding *ngSwitchCase="'register'">
+                    <app-register [userCredentials]="userCredentials" (submit)="onRegisterByEmail($event)"></app-register>
                 </div>
             </div>
         </ion-col>
@@ -50,7 +51,7 @@
             <!-- SESSION TO SELECT THE SOCIAL NETWORK-->
             <ion-row justify-content-around>
                 <ion-col>
-                    <ion-card class="social-network-circle google-circle" (click)="onGoogleLogin()">
+                    <ion-card class="social-network-circle google-circle" (click)="onGoogle()">
                         <ion-card-content>
                             <ion-row>
                                 <ion-col align-self-center>
@@ -61,7 +62,7 @@
                     </ion-card>
                 </ion-col>
                 <ion-col offset="1">
-                    <ion-card class="social-network-circle facebook-circle" (click)="onFacebookLogin()">
+                    <ion-card class="social-network-circle facebook-circle" (click)="onFacebook()">
                         <ion-card-content>
                             <ion-row>
                                 <ion-col align-self-center>
