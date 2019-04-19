@@ -1,7 +1,7 @@
-import { PopoverLocalController } from './../../../../../../shared/notification/popover-local.controller';
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NavParams } from '@ionic/angular';
+import { PopoverLocalController } from '../../../../../../shared/components/notification/popover-local.controller';
 
 /**
  * @name user-does-not-exist.popover

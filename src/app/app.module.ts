@@ -16,11 +16,15 @@ import { environment } from '../environments/environment';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AngularFirestoreModule, FirestoreSettingsToken } from '@angular/fire/firestore';
-import { SharedModule } from './shared/shared.module';
+import { CoreModule } from './core/core.module';
 
 @NgModule({
     declarations: [
         AppComponent
+    ],
+
+    entryComponents: [
+        // LoginPage
     ],
 
     imports: [
@@ -31,7 +35,7 @@ import { SharedModule } from './shared/shared.module';
         AngularFirestoreModule,
         AngularFireAuthModule,
         FormsModule,
-        SharedModule,
+        CoreModule,
         HttpClientModule,
         AppRoutingModule
     ],

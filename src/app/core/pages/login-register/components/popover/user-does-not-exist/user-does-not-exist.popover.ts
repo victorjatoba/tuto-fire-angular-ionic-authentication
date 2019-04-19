@@ -1,5 +1,5 @@
-import { PopoverLocalController } from '../../../../../../shared/notification/popover-local.controller';
 import { Component } from '@angular/core';
+import { PopoverLocalController } from '../../../../../../shared/components/notification/popover-local.controller';
 
 /**
  * @name user-does-not-exist.popover

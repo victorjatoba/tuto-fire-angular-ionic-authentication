@@ -23,6 +23,9 @@ const routes: Routes = [
     ],
     declarations: [
         RegisterPage
+    ],
+    exports: [
+        RegisterPage
     ]
 })
 export class RegisterPageModule { }
