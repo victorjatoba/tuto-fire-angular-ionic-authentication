@@ -1,6 +1,5 @@
 import { FieldValidationUtil } from './../../../shared/util/field-validation.util';
-import { Credentials } from '../../models/credentials.model';
-import { Input } from '@angular/core';
+import { Output, EventEmitter } from '@angular/core';
 
 /**
  * @name credential-pages.template
@@ -12,9 +11,9 @@ import { Input } from '@angular/core';
 export abstract class CredentialPagesTemplate {
 
     /**
-    * Login properties
-    */
-    @Input() userCredentials: Credentials;
+     * Return to the caller the new selected select value.
+     */
+    @Output() submit = new EventEmitter<any>();
 
     /**
      * To show the password eye icon and content
@@ -47,4 +46,9 @@ export abstract class CredentialPagesTemplate {
         FieldValidationUtil.validateInputWithUSCharacters(event);
     }
 
+    /**
+     * Called when click on 'Save' button.
+     * Responsible to call service to update the page values.
+     */
+    abstract onSubmit();
 }

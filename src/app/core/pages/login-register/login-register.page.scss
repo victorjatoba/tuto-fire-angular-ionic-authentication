@@ -1,5 +1,10 @@
-.outer-grid {
-  background-color: #fbfbfb;
+ion-segment {
+  --color-checked: var(--ion-color-dark);
+  --color-checked-disabled: var(--color-checked);
+}
+
+ion-segment-button {
+  --indicator-color-checked: var(--ion-color-medium) !important;
 }
 
 ion-col {

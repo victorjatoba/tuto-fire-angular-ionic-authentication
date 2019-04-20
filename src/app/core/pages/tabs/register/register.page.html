@@ -1,5 +1,5 @@
 <!-- CONTENT -->
-<form (ngSubmit)="onSubmit()" #form="ngForm">
+<form (ngSubmit)="onSubmit()" #f="ngForm">
   <ion-grid>
     <ion-row justify-content-center no-padding>
       <ion-col align-self-center no-padding>
@@ -13,13 +13,13 @@
               <ion-row>
                 <!-- FIRST NAME -->
                 <ion-col>
-                  <ion-input ngModel [(ngModel)]="user.firstName" type="text" id="input_firstName" name="firstName"
+                  <ion-input [(ngModel)]="user.firstName" type="text" id="input_firstName" class="input-first-name" name="firstName"
                     placeholder="first name" required>
                   </ion-input>
                 </ion-col>
                 <!-- LAST NAME -->
                 <ion-col>
-                  <ion-input ngModel [(ngModel)]="user.lastName" type="text" id="input_lastName" name="lastName"
+                  <ion-input [(ngModel)]="user.lastName" type="text" id="input_lastName" name="lastName"
                     placeholder="last name" required>
                   </ion-input>
                 </ion-col>
@@ -37,7 +37,7 @@
               <ion-row>
                 <ion-col>
                   <div>
-                    <ion-input [(ngModel)]="userCredentials.password" [type]="passwordType" id="login_input_password"
+                    <ion-input [(ngModel)]="user.password" [type]="passwordType" id="login_input_password"
                       clearOnEdit="false" name="password" placeholder="password" required>
                     </ion-input>
                     <ion-img *ngIf="!passwordShown" class="eye-style" id="passwordEye" (click)="passwordToggle()"
@@ -53,8 +53,8 @@
               <!-- ENTER BUTTON -->
               <ion-row>
                 <ion-col>
-                  <ion-button id="login_button_submit" [disabled]="!f.valid" type="submit" expand="block"
-                    class="bt-md-advanced test" shape="round">Login</ion-button>
+                  <ion-button id="register_button_submit" [disabled]="!f.valid" type="submit" expand="block"
+                    color="danger" shape="round">Sign up</ion-button>
                 </ion-col>
               </ion-row>
             </div>

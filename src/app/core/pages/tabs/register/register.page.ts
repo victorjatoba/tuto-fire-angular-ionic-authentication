@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from '../../../../shared/model/user.model';
 import { CredentialPagesTemplate } from '../credential-pages.template';
@@ -17,23 +17,14 @@ import { PopoverLocalController } from '../../../../shared/components/notificati
 })
 export class RegisterPage extends CredentialPagesTemplate {
 
-    user: User = {
-        id: undefined,
-        authService: '',
-        username: '',
-        password: '',
-        firstName: '',
-        lastName: '',
-        email: '',
-    };
+    @Input() user: User;
 
-    constructor(
-        public router: Router,
-        public popoverController: PopoverLocalController) {
-        super();
-    }
-
-    onRegisterByEmail() {
+    /**
+     * @override
+     */
+    onSubmit() {
+        event.stopPropagation();
+        this.submit.emit(JSON.stringify(this.user));
     }
 
 }

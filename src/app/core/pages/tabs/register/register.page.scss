@@ -1,94 +1,92 @@
-.outer-grid {
-    background-color: #fbfbfb;
-  }
-  
-  ion-col {
-    position: initial;
-  }
-    
-  ion-input {
-    margin-bottom: 0px;
-    margin-top: 0px;
-    background: #fff;
-    --padding-start: 18px;
-    color: #3e5055;
-  }
-  
-  ion-button {
-    margin-bottom: 0px;
-    margin-top: 0px;
-  }
-  
-  .item-password {
-    background: transparent;
-  }
-  
-  .eye-style {
-    margin-right: 10px;
-    margin-top: -35px;
-    float: right;
-    position: relative;
-    z-index: 5;
-  }
-  
-  .eye-off {
-    margin-top: -37px;
-  }
-    
-  .text-row {
-    padding-top: 20px;
-    padding-bottom: 20px;
-  }
-  
-  .text-container {
-    text-align: center;
-  }
-  
-  .text {
-    font-size: 14px;
-    line-height: 1;
-    letter-spacing: 0.3px;
-    color: #8b979f;
-  }
-  
-  .footer-text-left {
-    float: left;
-    cursor: pointer;
-  }
-  
-  .footer-text-right {
-    float: right;
-    cursor: pointer;
-  }
-  
-  .line {
-    height: 1px;
-    border: solid 1px #f0f0f0;
-  }
-  
-  .social-network-circle {
-    border-radius: 50%;
-    width: 68px;
-    height: 68px;
-    background: #ffffff;
-    border: solid 1px #f0f0f0;
-    box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.12);
-    cursor: pointer;
-  }
-  
-  .facebook-circle {
-    margin-right: auto;
-  }
-  
-  .google-circle {
-    margin-left: auto;
-  }
-  
-  img {
-    height: auto;
-    width: auto;
-    margin: auto;
-    display: block;
-    padding-top: 4px;
-  }
-  
+ion-col {
+  position: initial;
+}
+
+ion-input {
+  margin-bottom: 0px;
+  margin-top: 0px;
+  background: #fff;
+  --padding-start: 18px;
+  color: #3e5055;
+}
+
+.input-first-name {
+  border-right: solid;
+  border-width: 1px;
+  border-color: var(--ion-color-medium);
+}
+
+ion-button {
+  margin-bottom: 0px;
+  margin-top: 0px;
+}
+
+.item-password {
+  background: transparent;
+}
+
+.eye-style {
+  margin-right: 10px;
+  margin-top: -35px;
+  float: right;
+  position: relative;
+  z-index: 5;
+}
+
+.eye-off {
+  margin-top: -37px;
+}
+
+.text-row {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.text-container {
+  text-align: center;
+}
+
+.text {
+  font-size: 14px;
+  line-height: 1;
+  letter-spacing: 0.3px;
+  color: #8b979f;
+}
+
+.footer-text-left {
+  float: left;
+  cursor: pointer;
+}
+
+.footer-text-right {
+  float: right;
+  cursor: pointer;
+}
+
+.line {
+  height: 1px;
+  border: solid 1px #f0f0f0;
+}
+
+.social-network-circle {
+  border-radius: 50%;
+  width: 68px;
+  height: 68px;
+  background: #ffffff;
+  border: solid 1px #f0f0f0;
+  box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.12);
+  cursor: pointer;
+}
+
+img {
+  height: auto;
+  width: auto;
+  margin: auto;
+  display: block;
+  padding-top: 4px;
+}
+
+.submit-buttom {
+  --ion-color-primary: #d33939;
+  --ion-color-primary-shade: #d33939;
+}
