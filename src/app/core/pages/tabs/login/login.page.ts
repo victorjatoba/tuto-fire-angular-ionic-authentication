@@ -1,5 +1,6 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CredentialPagesTemplate } from '../credential-pages.template';
+import { Credentials } from '../../../models/credentials.model';
 
 @Component({
     selector: 'app-login',
@@ -9,13 +10,12 @@ import { CredentialPagesTemplate } from '../credential-pages.template';
 export class LoginPage extends CredentialPagesTemplate {
 
     /**
-     * Return to the caller the new selected select value.
-     */
-    @Output() submit = new EventEmitter<any>();
+    * Login properties
+    */
+    @Input() userCredentials: Credentials;
 
     /**
-     * Called when click on 'Save' button.
-     * Responsible to call service to update the page values.
+     * @override
      */
     onSubmit() {
         event.stopPropagation();

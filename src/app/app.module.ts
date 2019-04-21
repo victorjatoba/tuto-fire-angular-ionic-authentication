@@ -23,10 +23,6 @@ import { CoreModule } from './core/core.module';
         AppComponent
     ],
 
-    entryComponents: [
-        // LoginPage
-    ],
-
     imports: [
         BrowserModule,
         IonicModule.forRoot(),

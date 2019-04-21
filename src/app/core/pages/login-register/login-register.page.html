@@ -28,7 +28,7 @@
 
                 <!-- REGISTER -->
                 <div id="tab_register" no-padding *ngSwitchCase="'register'">
-                    <app-register [userCredentials]="userCredentials" (submit)="onRegisterByEmail($event)"></app-register>
+                    <app-register [user]="user" (submit)="onRegisterByEmail($event)"></app-register>
                 </div>
             </div>
         </ion-col>

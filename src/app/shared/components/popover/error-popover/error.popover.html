@@ -1,0 +1,25 @@
+<ion-row padding>
+  <ion-col size="12" text-center>
+    <ion-img src='assets/img/fail-popover.svg' class="check-popover"></ion-img>
+  </ion-col>
+
+  <!-- TITLE-->
+  <ion-col size="12" text-center>
+    <h2> {{ title }} </h2>
+  </ion-col>
+
+  <!--MESSAGE TXT-->
+  <ion-col size="12" text-center>
+    <p> {{ message }} </p>
+  </ion-col>
+
+</ion-row>
+
+<!-- BUTTON TO CLOSE THE POPOVER-->
+<ion-row>
+  <ion-col class="footer" no-padding>
+    <ion-button expand="block" id="bt_fechar_popover_rede_criada" class="fechar-button" (click)="onClose()">
+      Close
+    </ion-button>
+  </ion-col>
+</ion-row>

@@ -54,7 +54,7 @@ export class RouterUtil {
      * @param router To use for navigate to another page.
      */
     static goToLoginPage(router: Router) {
-        router.navigate([PageUrl.LOGIN]);
+        router.navigate([PageUrl.AUTHENTICATION]);
     }
 
     /**

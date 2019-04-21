@@ -10,10 +10,8 @@ import { SharedModule } from '../shared/shared.module';
 import { CoreRoutingModule } from './core-routing.module';
 
 import { FormsModule } from '@angular/forms';
-import { LoginRegisterPage } from './pages/login-register/login-register.page';
-import { LoginPageModule } from './pages/tabs/login/login.module';
 import { AuthGuard } from './guards/auth-guard.service';
-import { RegisterPageModule } from './pages/tabs/register/register.module';
+import { LoginRegisterPageModule } from './pages/login-register/login-register.module';
 
 @NgModule({
     imports: [
@@ -22,11 +20,7 @@ import { RegisterPageModule } from './pages/tabs/register/register.module';
         SharedModule,
         FormsModule,
         CoreRoutingModule,
-        LoginPageModule,
-        RegisterPageModule
-    ],
-    declarations: [
-        LoginRegisterPage,
+        LoginRegisterPageModule
     ],
     exports: [
         IonicModule,
