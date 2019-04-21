@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { AuthService } from '../services/authentication.service';
-import { Page } from '../../shared/const/page.enum';
+import { RouterUtil } from '../../shared/util/router.util';
+import { PageUrl } from '../../shared/util/page-url.enum';
 
 /**
  * @name auth-guard.service
@@ -33,7 +34,7 @@ export class AuthGuard implements CanActivate {
         // not logged in so redirect to login page with the return url
         console.log('The user have no permission to access this page!');
 
-        this.router.navigate([Page.AUTHENTICATION]);
+        RouterUtil.goToPage(PageUrl.AUTHENTICATION, this.router);
         return false;
     }
 }

@@ -1,6 +1,5 @@
 export enum PageUrl {
-    LOGIN = 'login',
-    REGISTER = 'register',
+    AUTHENTICATION = 'authentication',
     USER_HOME = 'home',
     USER_CREATE = 'home',
 }

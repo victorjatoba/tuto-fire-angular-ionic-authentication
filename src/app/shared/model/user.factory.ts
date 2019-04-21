@@ -91,18 +91,12 @@ export class UserFactory {
      * @param userProfile the user data.
      */
     private static createEmailPasswordUser(userProfile: any): User {
-        console.log(userProfile);
-
         return {
             authService: UserType.EMAIL_PASSWORD,
-            firstName: userProfile.given_name,
-            lastName: userProfile.family_name,
+            firstName: userProfile.firstName,
+            lastName: userProfile.lastName,
             email: userProfile.email,
-            id: userProfile.id,
-            gender: userProfile.gender,
-            pictureUrl: userProfile.picture,
-            password: '',
-            username: ''
+            password: userProfile.password,
         };
     }
 }

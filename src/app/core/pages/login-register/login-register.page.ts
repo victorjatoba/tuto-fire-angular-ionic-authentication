@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/authentication.service';
 import { PersistenceService } from '../../services/persistence.service';
-import { Page } from '../../../shared/const/page.enum';
 import { User } from '../../../shared/model/user.model';
 import { LoadingLocalController } from '../../../shared/components/loading/loading-local.controller';
 import { FirebaseErrorCode } from '../../const/firebase-error-code.const';
@@ -15,6 +14,9 @@ import { PageUrl } from '../../../shared/util/page-url.enum';
 import { RouterUtil } from '../../../shared/util/router.util';
 import { UserAlreadyExistPopover } from './components/popover/user-already-exist/user-already-exist.popover';
 import { Credentials } from '../../models/credentials.model';
+import { ErrorPopover } from '../../../shared/components/popover/error-popover/error.popover';
+import { UserFactory } from '../../../shared/model/user.factory';
+import { UserType } from '../../../shared/const/user-type.enum';
 
 /**
  * @name register.page
@@ -44,7 +46,6 @@ export class LoginRegisterPage {
     ];
 
     user: User = {
-        id: undefined,
         authService: '',
         username: '',
         password: '',
@@ -96,7 +97,7 @@ export class LoginRegisterPage {
         if (error.code === FirebaseErrorCode.ACCOUNT_EXISTS_WITH_DIFFERENT_CREDENTIAL) {
             this.showAccountAlreadyExistPopover(error.message, error.email);
         } else {
-            this.showErrorPopover();
+            this.showUserNotFoundErrorPopover();
         }
     }
 
@@ -106,19 +107,32 @@ export class LoginRegisterPage {
      * @param user
      */
     private persistUserOnDB(user: User) {
-        console.log(user);
         this.loading.showLoadingWithPersonalizedMessage('Registering...');
         this.persistence.save(user)
             .then(val => {
-                this.router.navigate([Page.HOME]);
+                RouterUtil.goToPage(PageUrl.USER_HOME, this.router);
                 this.loading.dismiss();
-            }, err => {
+            }, error => {
+                console.log(error);
                 this.loading.dismiss();
-                this.showErrorPopover();
+                this.showUserNotFoundErrorPopover();
             });
     }
 
-    onRegisterByEmail() {
+    onRegisterByEmail(userStr) {
+        console.log(JSON.parse(userStr));
+        console.log(this.user);
+
+        this.user = UserFactory.createUser(JSON.parse(userStr), UserType.EMAIL_PASSWORD);
+        // this.user = JSON.parse(userStr);
+        this.authService.registerByEmail(this.user.email, this.user.password)
+            .then(val => {
+                this.persistUserOnDB(this.user);
+            }, error => {
+                console.log(error);
+                this.showRegisterError('Authentication error', error.message);
+            });
+
     }
 
     onLoginByEmail() {
@@ -127,13 +141,13 @@ export class LoginRegisterPage {
     /**
      * Show an error popover to redirect user to correctly page.
      */
-    showErrorPopover() {
+    showUserNotFoundErrorPopover() {
         const popoverSubscription = this.popoverController.showPopover(UserDoesNotExistPopover, 'popover-content', null, null, false)
             .subscribe((data: NotificationReturn) => {
                 popoverSubscription.unsubscribe();
                 this.popoverController.dismiss();
                 if (data.type === NotificationReturnType.SUCCESS) {
-                    RouterUtil.goToPage(PageUrl.REGISTER, this.router);
+                    RouterUtil.goToPage(PageUrl.AUTHENTICATION, this.router);
                 }
             }, error => {
                 console.log(error);
@@ -151,6 +165,25 @@ export class LoginRegisterPage {
         };
 
         const popoverSubscription = this.popoverController.showPopover(UserAlreadyExistPopover, 'popover-content', data, null, true)
+            .subscribe((notificationReturn: NotificationReturn) => {
+                popoverSubscription.unsubscribe();
+                this.popoverController.dismiss();
+            }, error => {
+                console.log(error);
+                this.popoverController.dismiss();
+            });
+    }
+
+    /**
+     * Show an error popover to redirect user to correctly page.
+     */
+    showRegisterError(title, message) {
+        const data = {
+            message: message,
+            title: title
+        };
+
+        const popoverSubscription = this.popoverController.showPopover(ErrorPopover, 'popover-content', data, null, true)
             .subscribe((notificationReturn: NotificationReturn) => {
                 popoverSubscription.unsubscribe();
                 this.popoverController.dismiss();

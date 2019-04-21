@@ -10,7 +10,6 @@ import { RegisterPageModule } from '../tabs/register/register.module';
 import { UserDoesNotExistPopover } from './components/popover/user-does-not-exist/user-does-not-exist.popover';
 import { UserAlreadyExistPopover } from './components/popover/user-already-exist/user-already-exist.popover';
 
-
 const routes: Routes = [
     {
         path: '',

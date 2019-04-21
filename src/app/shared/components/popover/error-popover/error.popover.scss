@@ -1,0 +1,60 @@
+ion-backdrop{
+    opacity:0.41;
+}
+
+.check-popover{
+    width:57px;
+    margin: 20px auto 0 auto;
+}
+
+h2{
+    font-family: Arial;
+    font-size: 17px;
+    font-weight: bold;
+    color: #3e5055;
+    margin:17px 0 0 0;
+}
+
+p{
+    font-family: Arial;
+    font-size: 14px;
+    color: #8b979f;
+    line-height:1.43;
+    letter-spacing:0.3px;
+    margin:20px 0 16px 0;
+}
+
+ion-button{
+    &.fechar-button {
+        height: 100%;
+        margin:0px;
+    }
+}
+
+ion-footer{
+    height:60px;
+}
+
+ion-row{
+    ion-col{
+        --ion-grid-column-padding:0 18px;
+    }
+}
+
+.fechar-button {
+    --opacity: 0.9;
+    font-size: 16px;
+    --color: #3e5055;
+    --color-activated: #3e5055;
+    --color-focused: #3e5055;
+    --background: #ffffff;
+    --background-activated: #ffffff;
+    --background-focused: #ffffff;
+    text-transform: none;
+    --box-shadow: 0;
+    border-top:1px solid #f0f0f0;
+}
+
+.footer {
+    height: 56px;
+}

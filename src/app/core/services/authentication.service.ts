@@ -133,8 +133,6 @@ export class AuthService {
                 .auth
                 .createUserWithEmailAndPassword(email, password)
                 .then((result) => {
-                    console.log(result);
-
                     this.sendEmailVerification()
                         .then(res => {
                             resolve(res);
@@ -155,7 +153,6 @@ export class AuthService {
             this.angularFireAuth.auth.currentUser
                 .sendEmailVerification()
                 .then((res) => {
-                    console.log(res);
                     resolve(res);
                 }).catch(error => {
                     reject(error);
