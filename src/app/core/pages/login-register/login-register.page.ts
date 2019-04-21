@@ -4,7 +4,7 @@ import { AuthService } from '../../services/authentication.service';
 import { PersistenceService } from '../../services/persistence.service';
 import { User } from '../../../shared/model/user.model';
 import { LoadingLocalController } from '../../../shared/components/loading/loading-local.controller';
-import { FirebaseErrorCode } from '../../const/firebase-error-code.const';
+import { FirebaseErrorCode } from '../../../shared/const/firebase-error-code.const';
 import { PopoverLocalController } from '../../../shared/components/notification/popover-local.controller';
 import { LoginRegisterTab } from '../../const/login-register-tab.const';
 import { NotificationReturn } from '../../../shared/components/notification/notification-return';
@@ -120,16 +120,16 @@ export class LoginRegisterPage {
     }
 
     onRegisterByEmail(userStr) {
-        console.log(JSON.parse(userStr));
-        console.log(this.user);
 
+        this.loading.showLoading();
         this.user = UserFactory.createUser(JSON.parse(userStr), UserType.EMAIL_PASSWORD);
-        // this.user = JSON.parse(userStr);
         this.authService.registerByEmail(this.user.email, this.user.password)
             .then(val => {
+                this.loading.dismiss();
                 this.persistUserOnDB(this.user);
             }, error => {
                 console.log(error);
+                this.loading.dismiss();
                 this.showRegisterError('Authentication error', error.message);
             });
 
