@@ -119,10 +119,10 @@ export class LoginRegisterPage {
             });
     }
 
-    onRegisterByEmail(userStr) {
+    onRegisterByEmail(userStringfy) {
 
-        this.loading.showLoading();
-        this.user = UserFactory.createUser(JSON.parse(userStr), UserType.EMAIL_PASSWORD);
+        this.loading.show();
+        this.user = UserFactory.createUser(JSON.parse(userStringfy), UserType.EMAIL_PASSWORD);
         this.authService.registerByEmail(this.user.email, this.user.password)
             .then(val => {
                 this.loading.dismiss();
@@ -135,7 +135,18 @@ export class LoginRegisterPage {
 
     }
 
-    onLoginByEmail() {
+    onLoginByEmail(userStringfy) {
+        this.loading.show();
+        this.user = UserFactory.createUser(JSON.parse(userStringfy), UserType.EMAIL_PASSWORD);
+        this.authService.loginByEmail(this.user.email, this.user.password)
+            .then(user => {
+                RouterUtil.goToPage(PageUrl.USER_HOME, this.router);
+                this.loading.dismiss();
+            }, error => {
+                console.log(error);
+                this.loading.dismiss();
+                this.showRegisterError('Authentication error', error.message);
+            });
     }
 
     /**

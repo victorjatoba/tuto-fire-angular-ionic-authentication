@@ -14,14 +14,14 @@ import { Injectable } from '@angular/core';
 export class LoadingLocalController extends LoadingController {
 
     // TODO: change to TranslateService.
-    loading = 'Loading...';
+    readonly loadingMessage = 'Loading...';
 
     /**
      * Show the loading component at screen.
      */
-    async showLoading() {
+    async show() {
         const loading = await this.create({
-            message: this.loading,
+            message: this.loadingMessage,
         });
         loading.present();
     }

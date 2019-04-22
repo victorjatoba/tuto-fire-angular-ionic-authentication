@@ -166,13 +166,16 @@ export class AuthService {
             this.angularFireAuth
                 .auth
                 .signInWithEmailAndPassword(email, password)
-                .then((result) => {
-                    console.log(result);
+                .then(user => {
+                    console.log(user);
+                    const loggedUser = UserFactory.createUser(user, UserType.EMAIL_PASSWORD);
+                    console.log(loggedUser);
+                    this.registerUserOnLocalStorage(loggedUser);
 
                     // this.authState = result.user;
                     // const userProfileMoreInfo = credential.additionalUserInfo.profile;
                     // console.log(userProfileMoreInfo);
-                    resolve(result);
+                    resolve(loggedUser);
                 }).catch(error => {
                     reject(error);
                 });
