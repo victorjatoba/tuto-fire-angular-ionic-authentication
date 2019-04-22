@@ -58,7 +58,10 @@ export class AuthService {
         return new Promise<any>((resolve, reject) => {
             this.socialSignIn(provider)
                 .then(user => {
+                    console.log(user);
+
                     const newUser = UserFactory.createUser(user, UserType.GOOGLE);
+                    console.log(newUser);
                     this.registerUserOnLocalStorage(newUser);
                     resolve(newUser);
                 }).catch(err => {

@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestoreCollection, AngularFirestore, DocumentReference } from '@angular/fire/firestore';
-import { Router } from '@angular/router';
 import { User } from './../../shared/model/user.model';
 
 /**
@@ -16,7 +15,7 @@ export class PersistenceService {
 
     collection: AngularFirestoreCollection<User>;
 
-    constructor(private router: Router, db: AngularFirestore) {
+    constructor(db: AngularFirestore) {
         this.collection = db.collection<User>('users');
     }
 
