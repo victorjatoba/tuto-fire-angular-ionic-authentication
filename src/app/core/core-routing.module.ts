@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LoginRegisterPage } from './pages/login-register/login-register.page';
-import { AuthGuard } from './guards/auth-guard.service';
 import { PageUrl } from '../shared/util/page-url.enum';
 
 const routes: Routes = [
@@ -17,7 +16,6 @@ const routes: Routes = [
     {
         path: '**',
         component: LoginRegisterPage,
-        canActivate: [AuthGuard]
     }
 ];
 

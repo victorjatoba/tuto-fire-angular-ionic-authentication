@@ -61,7 +61,7 @@ export class UserFactory {
             lastName: userProfile.family_name,
             email: userProfile.email,
             id: userProfile.id,
-            gender: userProfile.gender,
+            gender: userProfile.gender === undefined ? '' : userProfile.gender,
             pictureUrl: userProfile.picture,
             password: '',
             username: ''

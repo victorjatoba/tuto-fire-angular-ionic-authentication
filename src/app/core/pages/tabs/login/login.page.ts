@@ -11,7 +11,7 @@ import { PopoverLocalController } from '../../../../shared/components/notificati
 @Component({
     selector: 'app-login',
     templateUrl: './login.page.html',
-    styleUrls: ['./login.page.scss'],
+    styleUrls: ['./../tabs.scss'],
 })
 export class LoginPage extends CredentialPagesTemplate {
 

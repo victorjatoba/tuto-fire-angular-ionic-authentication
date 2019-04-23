@@ -1,0 +1,46 @@
+.text-row {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.text-container {
+  text-align: center;
+}
+
+.text {
+  font-size: 14px;
+  line-height: 1;
+  letter-spacing: 0.3px;
+  color: #8b979f;
+}
+
+.line {
+  height: 1px;
+  border: solid 1px #f0f0f0;
+}
+
+.social-network-circle {
+  border-radius: 50%;
+  width: 68px;
+  height: 68px;
+  background: #ffffff;
+  border: solid 1px #f0f0f0;
+  box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.12);
+  cursor: pointer;
+}
+
+.facebook-circle {
+  margin-right: auto;
+}
+
+.google-circle {
+  margin-left: auto;
+}
+
+img {
+  height: auto;
+  width: auto;
+  margin: auto;
+  display: block;
+  padding-top: 4px;
+}

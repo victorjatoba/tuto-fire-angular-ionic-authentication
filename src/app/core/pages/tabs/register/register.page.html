@@ -4,18 +4,18 @@
     <ion-row justify-content-center no-padding>
       <ion-col align-self-center no-padding>
 
-         <ion-row justify-content-center>
-          <ion-col size-md="8" size-lg="6" align-self-center>
+        <ion-row justify-content-center>
+          <ion-col size-md="10" size-lg="8" align-self-center>
 
             <div no-padding>
-               <ion-row>
+              <ion-row>
                 <!-- FIRST NAME -->
                 <ion-col>
-                  <ion-input [(ngModel)]="user.firstName" type="text" id="input_firstName" class="input-first-name" name="firstName"
-                    placeholder="first name" required>
+                  <ion-input [(ngModel)]="user.firstName" type="text" id="input_firstName" class="input-first-name"
+                    name="firstName" placeholder="first name" required>
                   </ion-input>
                 </ion-col>
- 
+
                 <!-- LAST NAME -->
                 <ion-col>
                   <ion-input [(ngModel)]="user.lastName" type="text" id="input_lastName" name="lastName"
@@ -61,5 +61,6 @@
         </ion-row>
       </ion-col>
     </ion-row>
+    <app-social-media-buttons (google)="onGoogle()" (facebook)="onFacebook()"></app-social-media-buttons>
   </ion-grid>
 </form>

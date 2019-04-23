@@ -1,0 +1,32 @@
+.outer-grid {
+  background-color: #fbfbfb;
+}
+
+ion-col {
+  position: initial;
+}
+
+ion-input {
+  margin-bottom: 0px;
+  margin-top: 0px;
+  background: #fff;
+  --padding-start: 18px;
+  color: #3e5055;
+}
+
+ion-button {
+  margin-bottom: 0px;
+  margin-top: 0px;
+}
+
+.eye-style {
+  margin-right: 10px;
+  margin-top: -35px;
+  float: right;
+  position: relative;
+  z-index: 5;
+}
+
+.eye-off {
+  margin-top: -37px;
+}

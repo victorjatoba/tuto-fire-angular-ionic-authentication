@@ -94,7 +94,7 @@ export abstract class CredentialPagesTemplate {
         if (error.code === FirebaseErrorCode.ACCOUNT_EXISTS_WITH_DIFFERENT_CREDENTIAL) {
             this.showAccountAlreadyExistPopover(error.message, error.email);
         } else {
-            this.showUserNotFoundErrorPopover();
+            this.showRegisterError('Error founded', error.message);
         }
     }
 

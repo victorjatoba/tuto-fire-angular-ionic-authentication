@@ -1,15 +1,15 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from '../../../../shared/model/user.model';
 import { CredentialPagesTemplate } from '../credential-pages.template';
 import { PopoverLocalController } from '../../../../shared/components/notification/popover-local.controller';
 import { AuthService } from '../../../../core/services/authentication.service';
 import { LoadingLocalController } from '../../../../shared/components/loading/loading-local.controller';
-import { PersistenceService } from '../../../../core/services/persistence.service';
 import { UserFactory } from '../../../../shared/model/user.factory';
 import { UserType } from '../../../../shared/const/user-type.enum';
 import { RouterUtil } from '../../../../shared/util/router.util';
 import { PageUrl } from '../../../../shared/util/page-url.enum';
+import { FirebaseErrorCode } from '../../../../shared/const/firebase-error-code.const';
 
 /**
  * @name register.page
@@ -20,7 +20,7 @@ import { PageUrl } from '../../../../shared/util/page-url.enum';
 @Component({
     selector: 'app-register',
     templateUrl: './register.page.html',
-    styleUrls: ['./register.page.scss'],
+    styleUrls: ['./../tabs.scss'],
 })
 export class RegisterPage extends CredentialPagesTemplate {
 
@@ -35,7 +35,6 @@ export class RegisterPage extends CredentialPagesTemplate {
 
     constructor(
         private authService: AuthService,
-        private persistence: PersistenceService,
         public loading: LoadingLocalController,
         public router: Router,
         public popoverController: PopoverLocalController) {
@@ -57,7 +56,7 @@ export class RegisterPage extends CredentialPagesTemplate {
         this.authService.registerByEmail(this.user.email, this.user.password)
             .then(val => {
                 this.loading.dismiss();
-                this.persistUserOnDB(this.user);
+                RouterUtil.goToPage(PageUrl.USER_HOME, this.router);
             }, error => {
                 console.log(error);
                 this.loading.dismiss();
@@ -72,7 +71,7 @@ export class RegisterPage extends CredentialPagesTemplate {
     onFacebook() {
         this.authService.facebookLogin()
             .then(userFacebook => {
-                this.persistUserOnDB(userFacebook);
+
             }, error => {
                 console.log(error);
                 this.showAppropriateAuthError(error);
@@ -83,30 +82,15 @@ export class RegisterPage extends CredentialPagesTemplate {
      * Go Google Authentication.
      */
     onGoogle() {
-        this.authService.googleLogin()
+        this.authService.googleRegister()
             .then(user => {
-                this.persistUserOnDB(user);
-            }, error => {
-                console.log(error);
-                this.showAppropriateAuthError(error);
-            });
-    }
-
-    /**
-     * Persist the user on Firebase DB.
-     *
-     * @param user
-     */
-    private persistUserOnDB(user: User) {
-        this.loading.showLoadingWithPersonalizedMessage('Registering...');
-        this.persistence.save(user)
-            .then(val => {
                 RouterUtil.goToPage(PageUrl.USER_HOME, this.router);
-                this.loading.dismiss();
             }, error => {
-                console.log(error);
-                this.loading.dismiss();
-                this.showUserNotFoundErrorPopover();
+                if (error === FirebaseErrorCode.USER_ALREADY_EXIST_ON_DB) {
+                    RouterUtil.goToPage(PageUrl.USER_HOME, this.router);
+                } else {
+                    this.showAppropriateAuthError(error);
+                }
             });
     }
 

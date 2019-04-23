@@ -1,0 +1,42 @@
+<ion-row justify-content-center>
+    <ion-col size-md="8" align-self-center>
+        <!-- SOCIAL NETWORK SESSION -->
+        <ion-row class="text-row" align-items-center justify-content-center>
+            <ion-col>
+                <div class="line"></div>
+            </ion-col>
+            <ion-col class="text-container" size-xs="8">
+                <ion-label class="text" innerHTML="Social network">Or use your social media account</ion-label>
+            </ion-col>
+            <ion-col>
+                <div class="line"></div>
+            </ion-col>
+        </ion-row>
+
+        <!-- SESSION TO SELECT THE SOCIAL NETWORK-->
+        <ion-row justify-content-around>
+            <ion-col>
+                <ion-card class="social-network-circle google-circle" (click)="onGoogle()">
+                    <ion-card-content>
+                        <ion-row>
+                            <ion-col align-self-center>
+                                <img src="/assets/icon/ic-google.svg" alt="Google">
+                            </ion-col>
+                        </ion-row>
+                    </ion-card-content>
+                </ion-card>
+            </ion-col>
+            <ion-col offset="1">
+                <ion-card class="social-network-circle facebook-circle" (click)="onFacebook()">
+                    <ion-card-content>
+                        <ion-row>
+                            <ion-col align-self-center>
+                                <img src="/assets/icon/ic-facebook.svg" alt="Facebook">
+                            </ion-col>
+                        </ion-row>
+                    </ion-card-content>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+    </ion-col>
+</ion-row>

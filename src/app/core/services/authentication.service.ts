@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
 import * as firebase from 'firebase/app';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { BehaviorSubject } from 'rxjs';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { User } from './../../shared/model/user.model';
 import { UserFactory } from './../../shared/model/user.factory';
 import { UserType } from './../../shared/const/user-type.enum';
-import { Credentials } from '../models/credentials.model';
+import { FirebaseErrorCode } from '../../shared/const/firebase-error-code.const';
+import { PersistenceService } from './persistence.service';
+import { AngularFirestoreCollection, AngularFirestore } from '@angular/fire/firestore';
+
 /**
  * @name authentication-service.service
  *
@@ -28,7 +30,8 @@ export class AuthService {
     private currentUserSubject: BehaviorSubject<User>;
 
     constructor(public angularFireAuth: AngularFireAuth,
-        private http: HttpClient) {
+        public afs: AngularFirestore,
+        private persistence: PersistenceService) {
 
         this.initValues();
     }
@@ -61,13 +64,71 @@ export class AuthService {
                     console.log(user);
 
                     const newUser = UserFactory.createUser(user, UserType.GOOGLE);
-                    console.log(newUser);
                     this.registerUserOnLocalStorage(newUser);
                     resolve(newUser);
                 }).catch(err => {
                     reject(err);
                 });
         });
+    }
+
+    googleRegister() {
+        const provider = new firebase.auth.GoogleAuthProvider();
+        return new Promise<any>((resolve, reject) => {
+            this.socialSignIn(provider)
+                .then(user => {
+
+                    const querySubs = this.persistence.getUserByEmail(user.email)
+                        .subscribe(usersFound => {
+                            querySubs.unsubscribe();
+
+                            if (this.userIsAlreadyRegistered(usersFound)) {
+                                reject(FirebaseErrorCode.USER_ALREADY_EXIST_ON_DB);
+                            } else {
+                                const newUser = UserFactory.createUser(user, UserType.GOOGLE);
+                                this.persistUserOnDB(newUser)
+                                    .then(registered => {
+                                        this.registerUserOnLocalStorage(newUser);
+                                        resolve(registered);
+                                    }).catch(error => {
+                                        reject(error);
+
+                                    });
+                            }
+
+                        }, error => {
+                            reject(error);
+                        });
+
+                }).catch(error => {
+                    reject(error);
+                });
+        });
+    }
+
+    userIsAlreadyRegistered(usersFound) {
+        return usersFound !== undefined && usersFound.length > 0;
+    }
+
+    /**
+     * Persist the user on Firebase DB.
+     *
+     * @param user
+     */
+    private persistUserOnDB(user: User) {
+        return new Promise<any>((resolve, reject) => {
+            this.persistence.save(user)
+                .then(val => {
+                    resolve(val);
+
+                }).catch(error => {
+                    reject(error);
+                });
+        });
+    }
+
+    facebookRegister() {
+
     }
 
     /**
@@ -115,10 +176,10 @@ export class AuthService {
                 .then((credential) => {
                     this.authState = credential.user;
                     const userProfileMoreInfo = credential.additionalUserInfo.profile;
-                    console.log(userProfileMoreInfo);
                     resolve(userProfileMoreInfo);
                 })
                 .catch(error => {
+                    console.log(error);
                     reject(error);
                 });
         });
@@ -187,6 +248,9 @@ export class AuthService {
 
     async sendPasswordResetEmail(passwordResetEmail: string) {
         return await this.angularFireAuth.auth.sendPasswordResetEmail(passwordResetEmail);
+    }
+
+    verifyIfUserExistsOnDB() {
     }
 
     /**

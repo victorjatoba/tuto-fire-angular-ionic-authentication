@@ -15,7 +15,7 @@ export class PersistenceService {
 
     collection: AngularFirestoreCollection<User>;
 
-    constructor(db: AngularFirestore) {
+    constructor(private db: AngularFirestore) {
         this.collection = db.collection<User>('users');
     }
 
@@ -26,5 +26,14 @@ export class PersistenceService {
      */
     save(user: User): Promise<DocumentReference> {
         return this.collection.add(user);
+    }
+
+    /**
+     * Find the user by email.
+     *
+     * @param email the user email.
+     */
+    getUserByEmail(email: string) {
+        return this.db.collection('users', ref => ref.where('email', '==', email)).valueChanges();
     }
 }
