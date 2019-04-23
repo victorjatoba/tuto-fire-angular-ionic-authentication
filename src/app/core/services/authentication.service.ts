@@ -74,6 +74,15 @@ export class AuthService {
 
     googleRegister() {
         const provider = new firebase.auth.GoogleAuthProvider();
+        return this.registerUserBySocialAccount(provider, UserType.GOOGLE);
+    }
+
+    facebookRegister() {
+        const provider = new firebase.auth.FacebookAuthProvider();
+        return this.registerUserBySocialAccount(provider, UserType.FACEBOOK);
+    }
+
+    private registerUserBySocialAccount(provider, socialAccountType: UserType) {
         return new Promise<any>((resolve, reject) => {
             this.socialSignIn(provider)
                 .then(user => {
@@ -85,7 +94,7 @@ export class AuthService {
                             if (this.userIsAlreadyRegistered(usersFound)) {
                                 reject(FirebaseErrorCode.USER_ALREADY_EXIST_ON_DB);
                             } else {
-                                const newUser = UserFactory.createUser(user, UserType.GOOGLE);
+                                const newUser = UserFactory.createUser(user, socialAccountType);
                                 this.persistUserOnDB(newUser)
                                     .then(registered => {
                                         this.registerUserOnLocalStorage(newUser);
@@ -125,10 +134,6 @@ export class AuthService {
                     reject(error);
                 });
         });
-    }
-
-    facebookRegister() {
-
     }
 
     /**

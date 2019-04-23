@@ -66,31 +66,36 @@ export class RegisterPage extends CredentialPagesTemplate {
     }
 
     /**
-     * Go Facebook Authentication.
+     * Register user by facebook account if he doesn't exist on
+     * DB and redirect to home-page.
      */
     onFacebook() {
-        this.authService.facebookLogin()
-            .then(userFacebook => {
-
+        this.authService.facebookRegister()
+            .then(user => {
+                RouterUtil.goToPage(PageUrl.USER_HOME, this.router);
             }, error => {
-                console.log(error);
-                this.showAppropriateAuthError(error);
+                this.showErrorOrRedirectToHome(error);
             });
     }
 
+    private showErrorOrRedirectToHome(error: any) {
+        if (error === FirebaseErrorCode.USER_ALREADY_EXIST_ON_DB) {
+            RouterUtil.goToPage(PageUrl.USER_HOME, this.router);
+        } else {
+            this.showAppropriateAuthError(error);
+        }
+    }
+
     /**
-     * Go Google Authentication.
+     * Register user by google account if he doesn't exist on
+     * DB and redirect to home-page.
      */
     onGoogle() {
         this.authService.googleRegister()
             .then(user => {
                 RouterUtil.goToPage(PageUrl.USER_HOME, this.router);
             }, error => {
-                if (error === FirebaseErrorCode.USER_ALREADY_EXIST_ON_DB) {
-                    RouterUtil.goToPage(PageUrl.USER_HOME, this.router);
-                } else {
-                    this.showAppropriateAuthError(error);
-                }
+                this.showErrorOrRedirectToHome(error);
             });
     }
 
