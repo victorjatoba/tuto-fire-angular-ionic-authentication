@@ -22,11 +22,6 @@ import { Router } from '@angular/router';
 export abstract class CredentialPagesTemplate {
 
     /**
-     * Return to the caller the new selected select value.
-     */
-    @Output() submit = new EventEmitter<any>();
-
-    /**
      * To show the password eye icon and content
      */
     passwordShown = false;

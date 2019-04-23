@@ -184,7 +184,6 @@ export class AuthService {
                     resolve(userProfileMoreInfo);
                 })
                 .catch(error => {
-                    console.log(error);
                     reject(error);
                 });
         });

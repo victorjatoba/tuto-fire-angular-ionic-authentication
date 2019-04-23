@@ -45,14 +45,11 @@ export class RegisterPage extends CredentialPagesTemplate {
      * @override
      */
     onSubmit() {
-        event.stopPropagation();
-        this.submit.emit(JSON.stringify(this.user));
+        this.onRegisterByEmail();
     }
 
-    onRegisterByEmail(userStringfy) {
-
+    onRegisterByEmail() {
         this.loading.show();
-        this.user = UserFactory.createUser(JSON.parse(userStringfy), UserType.EMAIL_PASSWORD);
         this.authService.registerByEmail(this.user.email, this.user.password)
             .then(val => {
                 this.loading.dismiss();
