@@ -42,15 +42,15 @@ export class AuthService {
     private initValues() {
         this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('user')));
 
-        this.angularFireAuth.authState
-            .subscribe(user => {
-                if (user) {
-                    const newUser = UserFactory.createUser(user, UserType.EMAIL_PASSWORD);
-                    this.registerUserOnLocalStorage(newUser);
-                } else {
-                    localStorage.setItem('user', null);
-                }
-            });
+        // this.angularFireAuth.authState
+        //     .subscribe(user => {
+        //         if (user) {
+        //             const newUser = UserFactory.createUser(user, UserType.EMAIL_PASSWORD);
+        //             this.registerUserOnLocalStorage(newUser);
+        //         } else {
+        //             localStorage.setItem('user', null);
+        //         }
+        //     });
     }
 
     /**
@@ -61,13 +61,28 @@ export class AuthService {
         return new Promise<any>((resolve, reject) => {
             this.socialSignIn(provider)
                 .then(user => {
-                    console.log(user);
-
                     const newUser = UserFactory.createUser(user, UserType.GOOGLE);
                     this.registerUserOnLocalStorage(newUser);
                     resolve(newUser);
                 }).catch(err => {
                     reject(err);
+                });
+        });
+    }
+
+    /**
+     * Register user by email and password
+     *
+     * @param email the email chose by user.
+     * @param password the password chose by user.
+     */
+    registerByEmail(user) {
+        return new Promise<any>((resolve, reject) => {
+            this.registerUserIfDoesNotExist(user, UserType.EMAIL_PASSWORD)
+                .then(v => {
+                    resolve(v);
+                }).catch(registerError => {
+                    reject(registerError);
                 });
         });
     }
@@ -86,27 +101,11 @@ export class AuthService {
         return new Promise<any>((resolve, reject) => {
             this.socialSignIn(provider)
                 .then(user => {
-
-                    const querySubs = this.persistence.getUserByEmail(user.email)
-                        .subscribe(usersFound => {
-                            querySubs.unsubscribe();
-
-                            if (this.userIsAlreadyRegistered(usersFound)) {
-                                reject(FirebaseErrorCode.USER_ALREADY_EXIST_ON_DB);
-                            } else {
-                                const newUser = UserFactory.createUser(user, socialAccountType);
-                                this.persistUserOnDB(newUser)
-                                    .then(registered => {
-                                        this.registerUserOnLocalStorage(newUser);
-                                        resolve(registered);
-                                    }).catch(error => {
-                                        reject(error);
-
-                                    });
-                            }
-
-                        }, error => {
-                            reject(error);
+                    this.registerUserIfDoesNotExist(user, socialAccountType)
+                        .then(v => {
+                            resolve(v);
+                        }).catch(registerError => {
+                            reject(registerError);
                         });
 
                 }).catch(error => {
@@ -115,7 +114,42 @@ export class AuthService {
         });
     }
 
-    userIsAlreadyRegistered(usersFound) {
+    private registerUserIfDoesNotExist(user: any, accountType: UserType) {
+        return new Promise<any>((resolve, reject) => {
+            const getUserSubs = this.persistence.getUserByEmail(user.email)
+                .subscribe(usersFound => {
+                    getUserSubs.unsubscribe();
+
+                    if (this.isUserIsAlreadyRegistered(usersFound)) {
+                        const error = {
+                            code: FirebaseErrorCode.USER_ALREADY_EXIST_ON_DB,
+                            messageTitle: 'Email already in use',
+                            message: 'Try to Login or use another account.'
+                        };
+                        reject(error);
+
+                    } else {
+                        const newUser = UserFactory.createUser(user, accountType);
+                        this.persistUserOnDB(newUser)
+                            .then(registered => {
+                                this.registerUserOnLocalStorage(newUser);
+                                if (accountType === UserType.EMAIL_PASSWORD) {
+                                    this.sendEmailVerification();
+                                }
+                                resolve(registered);
+                            }).catch(persistenceError => {
+                                reject(persistenceError);
+
+                            });
+                    }
+                }, error => {
+                    getUserSubs.unsubscribe();
+                    reject(error);
+                });
+        });
+    }
+
+    isUserIsAlreadyRegistered(usersFound) {
         return usersFound !== undefined && usersFound.length > 0;
     }
 
@@ -190,30 +224,6 @@ export class AuthService {
     }
 
     /**
-     * Register user by email and password
-     *
-     * @param email the email chose by user.
-     * @param password the password chose by user.
-     */
-    registerByEmail(email: string, password: string) {
-        return new Promise<any>((resolve, reject) => {
-            this.angularFireAuth
-                .auth
-                .createUserWithEmailAndPassword(email, password)
-                .then((result) => {
-                    this.sendEmailVerification()
-                        .then(res => {
-                            resolve(res);
-                        }).catch(error => {
-                            reject(error);
-                        });
-                }).catch(error => {
-                    reject(error);
-                });
-        });
-    }
-
-    /**
      * Send email to user to verify the email.
      */
     private sendEmailVerification() {
@@ -235,14 +245,8 @@ export class AuthService {
                 .auth
                 .signInWithEmailAndPassword(email, password)
                 .then(user => {
-                    console.log(user);
                     const loggedUser = UserFactory.createUser(user, UserType.EMAIL_PASSWORD);
-                    console.log(loggedUser);
                     this.registerUserOnLocalStorage(loggedUser);
-
-                    // this.authState = result.user;
-                    // const userProfileMoreInfo = credential.additionalUserInfo.profile;
-                    // console.log(userProfileMoreInfo);
                     resolve(loggedUser);
                 }).catch(error => {
                     reject(error);
@@ -252,9 +256,6 @@ export class AuthService {
 
     async sendPasswordResetEmail(passwordResetEmail: string) {
         return await this.angularFireAuth.auth.sendPasswordResetEmail(passwordResetEmail);
-    }
-
-    verifyIfUserExistsOnDB() {
     }
 
     /**

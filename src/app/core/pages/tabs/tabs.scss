@@ -30,3 +30,34 @@ ion-button {
 .eye-off {
   margin-top: -37px;
 }
+
+.text-row {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.text-container {
+  text-align: center;
+}
+
+.text {
+  font-size: 14px;
+  line-height: 1;
+  letter-spacing: 0.3px;
+  color: #8b979f;
+}
+
+.footer-text-left {
+  float: left;
+  cursor: pointer;
+}
+
+.footer-text-right {
+  float: right;
+  cursor: pointer;
+}
+
+.line {
+  height: 1px;
+  border: solid 1px #f0f0f0;
+}

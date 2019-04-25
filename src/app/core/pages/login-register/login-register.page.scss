@@ -24,67 +24,6 @@ ion-button {
   margin-top: 0px;
 }
 
-.item-password {
-  background: transparent;
-}
-
-.eye-style {
-  margin-right: 10px;
-  margin-top: -35px;
-  float: right;
-  position: relative;
-  z-index: 5;
-}
-
-.eye-off {
-  margin-top: -37px;
-}
-
-.text-row {
-  padding-top: 20px;
-  padding-bottom: 20px;
-}
-
-.text-container {
-  text-align: center;
-}
-
-.text {
-  font-size: 14px;
-  line-height: 1;
-  letter-spacing: 0.3px;
-  color: #8b979f;
-}
-
-.footer-text-left {
-  float: left;
-  cursor: pointer;
-}
-
-.footer-text-right {
-  float: right;
-  cursor: pointer;
-}
-
-.line {
-  height: 1px;
-  border: solid 1px #f0f0f0;
-}
-
-img {
-  height: auto;
-  width: auto;
-  margin: auto;
-  display: block;
-  padding-top: 4px;
-}
-
-ion-segment-button {
-  --border-radius: 1.8px;
-  --indicator-color: #f0f0f0;
-  --indicator-color-checked: #4cc968;
-}
-
 .content-title {
   font-family: Arial;
   font-size: 14px;

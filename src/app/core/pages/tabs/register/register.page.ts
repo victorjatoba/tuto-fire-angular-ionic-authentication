@@ -5,8 +5,6 @@ import { CredentialPagesTemplate } from '../credential-pages.template';
 import { PopoverLocalController } from '../../../../shared/components/notification/popover-local.controller';
 import { AuthService } from '../../../../core/services/authentication.service';
 import { LoadingLocalController } from '../../../../shared/components/loading/loading-local.controller';
-import { UserFactory } from '../../../../shared/model/user.factory';
-import { UserType } from '../../../../shared/const/user-type.enum';
 import { RouterUtil } from '../../../../shared/util/router.util';
 import { PageUrl } from '../../../../shared/util/page-url.enum';
 import { FirebaseErrorCode } from '../../../../shared/const/firebase-error-code.const';
@@ -50,14 +48,17 @@ export class RegisterPage extends CredentialPagesTemplate {
 
     onRegisterByEmail() {
         this.loading.show();
-        this.authService.registerByEmail(this.user.email, this.user.password)
+        this.authService.registerByEmail(this.user)
             .then(val => {
                 this.loading.dismiss();
                 RouterUtil.goToPage(PageUrl.USER_HOME, this.router);
             }, error => {
-                console.log(error);
                 this.loading.dismiss();
-                this.showRegisterError('Authentication error', error.message);
+                let messageTitle = 'Authentication Error';
+                if (error.code === FirebaseErrorCode.USER_ALREADY_EXIST_ON_DB) {
+                    messageTitle = error.messageTitle;
+                }
+                this.showRegisterError(messageTitle, error.message);
             });
 
     }
@@ -76,7 +77,7 @@ export class RegisterPage extends CredentialPagesTemplate {
     }
 
     private showErrorOrRedirectToHome(error: any) {
-        if (error === FirebaseErrorCode.USER_ALREADY_EXIST_ON_DB) {
+        if (error.code === FirebaseErrorCode.USER_ALREADY_EXIST_ON_DB) {
             RouterUtil.goToPage(PageUrl.USER_HOME, this.router);
         } else {
             this.showAppropriateAuthError(error);
