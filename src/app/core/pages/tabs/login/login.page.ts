@@ -42,6 +42,8 @@ export class LoginPage extends CredentialPagesTemplate {
         this.loading.show();
         this.authService.loginByEmail(this.userCredentials.email, this.userCredentials.password)
             .then(user => {
+                console.log(user);
+
                 RouterUtil.goToPage(PageUrl.USER_HOME, this.router);
                 this.loading.dismiss();
             }, error => {

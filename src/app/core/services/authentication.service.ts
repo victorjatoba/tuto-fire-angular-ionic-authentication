@@ -240,6 +240,8 @@ export class AuthService {
     }
 
     loginByEmail(email: string, password: string) {
+        console.log(email, password);
+
         return new Promise<any>((resolve, reject) => {
             this.angularFireAuth
                 .auth
