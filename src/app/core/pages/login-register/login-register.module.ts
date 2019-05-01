@@ -9,11 +9,12 @@ import { LoginPageModule } from '../tabs/login/login.module';
 import { RegisterPageModule } from '../tabs/register/register.module';
 import { UserDoesNotExistPopover } from './components/popover/user-does-not-exist/user-does-not-exist.popover';
 import { UserAlreadyExistPopover } from './components/popover/user-already-exist/user-already-exist.popover';
-import { SharedModule } from '../../../shared/shared.module';
+import { SecureInnerPagesGuard } from '../../guards/secure-inner-pages.guard';
 
 const routes: Routes = [
     {
         path: '',
+        canActivate: [SecureInnerPagesGuard],
         component: LoginRegisterPage
     }
 ];

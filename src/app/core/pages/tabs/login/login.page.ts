@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { CredentialPagesTemplate } from '../credential-pages.template';
 import { Credentials } from '../../../models/credentials.model';
-import { AuthService } from '../../../../core/services/authentication.service';
+import { AuthService } from '../../../services/auth.service';
 import { RouterUtil } from '../../../../shared/util/router.util';
 import { PageUrl } from '../../../../shared/util/page-url.enum';
 import { LoadingLocalController } from '../../../../shared/components/loading/loading-local.controller';

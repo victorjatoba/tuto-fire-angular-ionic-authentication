@@ -2,12 +2,12 @@ import { Injectable } from '@angular/core';
 import * as firebase from 'firebase/app';
 import { BehaviorSubject } from 'rxjs';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { User } from './../../shared/model/user.model';
-import { UserFactory } from './../../shared/model/user.factory';
-import { UserType } from './../../shared/const/user-type.enum';
+import { User } from '../../shared/model/user.model';
+import { UserFactory } from '../../shared/model/user.factory';
+import { UserType } from '../../shared/const/user-type.enum';
 import { FirebaseErrorCode } from '../../shared/const/firebase-error-code.const';
 import { PersistenceService } from './persistence.service';
-import { AngularFirestoreCollection, AngularFirestore } from '@angular/fire/firestore';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 /**
  * @name authentication-service.service
@@ -42,15 +42,26 @@ export class AuthService {
     private initValues() {
         this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('user')));
 
-        // this.angularFireAuth.authState
-        //     .subscribe(user => {
-        //         if (user) {
-        //             const newUser = UserFactory.createUser(user, UserType.EMAIL_PASSWORD);
-        //             this.registerUserOnLocalStorage(newUser);
-        //         } else {
-        //             localStorage.setItem('user', null);
-        //         }
-        //     });
+        this.initUser();
+    }
+
+    /**
+     * Subscribe to the authentication state; if the user is logged in,
+     * we add the user's data to the browser's local storage; otherwise
+     * we store a null user.
+     */
+    private initUser() {
+        this.angularFireAuth.authState
+            .subscribe(async user => {
+                console.log(user);
+                if (user) {
+                    const newUser = await UserFactory.createUser(user, UserType.EMAIL_PASSWORD);
+                    this.registerUserOnLocalStorage(newUser);
+                    console.log(newUser);
+                } else {
+                    localStorage.setItem('user', null);
+                }
+            });
     }
 
     /**
@@ -77,14 +88,7 @@ export class AuthService {
      * @param password the password chose by user.
      */
     registerByEmail(user) {
-        return new Promise<any>((resolve, reject) => {
-            this.registerUserIfDoesNotExist(user, UserType.EMAIL_PASSWORD)
-                .then(v => {
-                    resolve(v);
-                }).catch(registerError => {
-                    reject(registerError);
-                });
-        });
+        return this.registerUserIfDoesNotExist(user, UserType.EMAIL_PASSWORD);
     }
 
     googleRegister() {
@@ -129,10 +133,14 @@ export class AuthService {
                         reject(error);
 
                     } else {
+
                         const newUser = UserFactory.createUser(user, accountType);
+                        console.log(newUser);
                         this.persistUserOnDB(newUser)
                             .then(registered => {
                                 this.registerUserOnLocalStorage(newUser);
+                                console.log(newUser, accountType);
+
                                 if (accountType === UserType.EMAIL_PASSWORD) {
                                     this.sendEmailVerification();
                                 }

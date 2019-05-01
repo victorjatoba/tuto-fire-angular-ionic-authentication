@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LoginRegisterPage } from './pages/login-register/login-register.page';
 import { PageUrl } from '../shared/util/page-url.enum';
+import { SecureInnerPagesGuard } from './guards/secure-inner-pages.guard';
 
 const routes: Routes = [
     {
@@ -15,6 +16,7 @@ const routes: Routes = [
     //  Path for 404. Page Not Found.
     {
         path: '**',
+        canActivate: [SecureInnerPagesGuard],
         component: LoginRegisterPage,
     }
 ];

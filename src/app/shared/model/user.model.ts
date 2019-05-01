@@ -12,4 +12,5 @@ export interface User {
     gender?: string;
     token?: string;
     pictureUrl?: string;
+    emailVerified?: boolean;
 }

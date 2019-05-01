@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import { AuthService } from '../services/authentication.service';
+import { AuthService } from '../services/auth.service';
 import { RouterUtil } from '../../shared/util/router.util';
 import { PageUrl } from '../../shared/util/page-url.enum';
+import { Observable } from 'rxjs';
 
 /**
  * @name auth-guard.service
@@ -10,13 +11,13 @@ import { PageUrl } from '../../shared/util/page-url.enum';
  * @description
  * Verify if the user has permission to access the page.
  *
- * @author victor.jatoba
+ * @author victorjatoba
  */
 @Injectable()
 export class AuthGuard implements CanActivate {
     constructor(
         private router: Router,
-        private authenticationService: AuthService
+        private authService: AuthService
     ) { }
 
     /**
@@ -26,7 +27,8 @@ export class AuthGuard implements CanActivate {
      * @param state
      */
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-        if (this.authenticationService.isLoggedIn) {
+        console.log(this.authService.isLoggedIn);
+        if (this.authService.isLoggedIn) {
             // logged in so return true
             return true;
         }

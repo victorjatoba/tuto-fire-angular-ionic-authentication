@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { User } from '../../../../shared/model/user.model';
 import { CredentialPagesTemplate } from '../credential-pages.template';
 import { PopoverLocalController } from '../../../../shared/components/notification/popover-local.controller';
-import { AuthService } from '../../../../core/services/authentication.service';
+import { AuthService } from '../../../services/auth.service';
 import { LoadingLocalController } from '../../../../shared/components/loading/loading-local.controller';
 import { RouterUtil } from '../../../../shared/util/router.util';
 import { PageUrl } from '../../../../shared/util/page-url.enum';
@@ -46,14 +46,14 @@ export class RegisterPage extends CredentialPagesTemplate {
         this.onRegisterByEmail();
     }
 
-    onRegisterByEmail() {
-        this.loading.show();
+    async onRegisterByEmail() {
+        await this.loading.show();
         this.authService.registerByEmail(this.user)
             .then(val => {
                 this.loading.dismiss();
                 RouterUtil.goToPage(PageUrl.USER_HOME, this.router);
-            }, error => {
-                this.loading.dismiss();
+            }, async error => {
+                await this.loading.dismiss();
                 let messageTitle = 'Authentication Error';
                 if (error.code === FirebaseErrorCode.USER_ALREADY_EXIST_ON_DB) {
                     messageTitle = error.messageTitle;
