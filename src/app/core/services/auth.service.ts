@@ -259,6 +259,8 @@ export class AuthService {
                     this.registerUserOnLocalStorage(loggedUser);
                     resolve(loggedUser);
                 }).catch(error => {
+                    console.log(error);
+
                     reject(error);
                 });
         });

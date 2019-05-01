@@ -37,7 +37,7 @@
                 <ion-col>
                   <div>
                     <ion-input [(ngModel)]="user.password" [type]="passwordType" id="login_input_password"
-                      clearOnEdit="false" name="password" placeholder="password" required>
+                      clearOnEdit="false" name="password" placeholder="password: min 6, max 18" required>
                     </ion-input>
                     <ion-img *ngIf="!passwordShown" class="eye-style" id="passwordEye" (click)="passwordToggle()"
                       src="assets/icon/ic-eye.svg">
@@ -52,7 +52,7 @@
               <!-- ENTER BUTTON -->
               <ion-row>
                 <ion-col>
-                  <ion-button id="register_button_submit" [disabled]="!f.valid" type="submit" expand="block"
+                  <ion-button id="register_button_submit" [disabled]="!f.valid || user.password.length < 6 || user.password.length > 18" type="submit" expand="block"
                     color="danger" shape="round">Sign up</ion-button>
                 </ion-col>
               </ion-row>
