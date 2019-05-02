@@ -100,3 +100,4 @@ Distributed under the MIT license. See ``LICENSE`` for more information.
 - http://jasonwatmore.com/post/2018/11/16/angular-7-jwt-authentication-example-tutorial#error-interceptor-ts
 - https://www.appypie.com/faqs/how-can-i-get-api-key-auth-domain-database-url-and-storage-bucket-from-my-firebase-account
 - https://www.positronx.io/full-angular-7-firebase-authentication-system/
+- https://firebase.google.com/docs/auth/admin/
